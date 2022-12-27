@@ -6,7 +6,7 @@
       <div class="text-2xl font-extrabold text-primary">1-000-000-0000</div>
     </div>
     <template #footer>
-      <el-button class="w-full rounded-2xl mb-5" color="#2C72FE" @click="dialogVisible = false"> 确认 </el-button>
+      <el-button class="w-full rounded-3xl mb-5" color="#2C72FE" @click="dialogVisible = false"> 确认 </el-button>
     </template>
   </el-dialog>
 </template>

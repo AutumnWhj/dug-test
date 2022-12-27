@@ -29,7 +29,7 @@
           <span class="text-primary text-xs cursor-pointer hover:text-blue-500/70">条款和条件</span>
         </el-checkbox>
       </div>
-      <el-button class="w-full rounded-2xl mb-8" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)"> Register </el-button>
+      <el-button class="w-full rounded-3xl mb-8" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)"> Register </el-button>
       <div class="text-center">
         <span class="text-gray-300/50 text-xs"> 已经有账户了？</span>
         <span class="text-primary text-xs cursor-pointer hover:text-blue-500/70" @click="toLogin">登录</span>
