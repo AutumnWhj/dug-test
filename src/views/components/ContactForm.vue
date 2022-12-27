@@ -32,11 +32,13 @@
       </el-form-item>
     </el-form>
   </div>
+  <Feedback v-if="dialogVisible" v-model="dialogVisible" />
 </template>
 <script lang="ts" setup>
   import { reactive, ref } from 'vue';
   import type { FormInstance, FormRules } from 'element-plus';
-
+  import Feedback from '/@/components/Dialog/Feedback.vue';
+  const dialogVisible = ref(false);
   const ruleFormRef = ref<FormInstance>();
   const ruleForm = reactive({
     name: 'Hello',

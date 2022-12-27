@@ -15,10 +15,17 @@ body {
   background-color: rgba(247, 249, 255, 1);
   color: #000;
 }
+.card-shadow {
+  box-shadow: 0px 4px 24px 0px #040349;
+}
+
 .el-textarea__inner,
 .el-input {
   --el-input-border-radius: 1rem !important;
 }
 .el-popper__arrow {
   display: none;
+}
+.el-dialog {
+  border-radius: 2rem;
 }
