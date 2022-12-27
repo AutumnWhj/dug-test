@@ -7,21 +7,21 @@
         <div class="text-gray-300/50 text-sm">创建帐户以继续！</div>
       </div>
       <el-form class="w-full" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large">
-        <el-form-item prop="name">
-          <el-input v-model="ruleForm.name" placeholder="你的邮箱" />
+        <el-form-item prop="email">
+          <el-input v-model="ruleForm.email" placeholder="你的邮箱" />
         </el-form-item>
-        <el-form-item prop="name">
-          <el-input v-model="ruleForm.name" placeholder="你的名字" />
+        <el-form-item prop="username">
+          <el-input v-model="ruleForm.username" placeholder="你的名字" />
         </el-form-item>
-        <el-form-item prop="name">
-          <el-input v-model="ruleForm.name" placeholder="你的电话" />
+        <el-form-item prop="phone_number">
+          <el-input v-model="ruleForm.phone_number" placeholder="你的电话" />
         </el-form-item>
-        <el-form-item prop="name">
-          <el-input v-model="ruleForm.name" placeholder="密码" />
+        <el-form-item prop="password">
+          <el-input v-model="ruleForm.password" placeholder="密码" />
         </el-form-item>
-        <el-form-item prop="name">
-          <el-input v-model="ruleForm.name" placeholder="再次输入密码" />
-        </el-form-item>
+        <!-- <el-form-item prop="name">
+          <el-input v-model="ruleForm.password" placeholder="再次输入密码" />
+        </el-form-item> -->
       </el-form>
       <div class="w-full flex justify-between items-center mb-8">
         <el-checkbox v-model="isRemember" label="记住密码" size="small">
@@ -42,9 +42,14 @@
   import { useRouter } from 'vue-router';
   import type { FormInstance, FormRules } from 'element-plus';
   import logoTextImage from '/@/assets/images/logo_text.png';
+  import { register } from '/@/api/user';
+
   const ruleFormRef = ref<FormInstance>();
   const ruleForm = reactive({
-    name: '',
+    email: '',
+    username: '',
+    password: '',
+    phone_number: '',
   });
   const rules = reactive<FormRules>({
     name: [
@@ -58,7 +63,8 @@
     if (!formEl) return;
     await formEl.validate((valid, fields) => {
       if (valid) {
-        console.log('submit!');
+        console.log('submit!', ruleForm);
+        register(ruleForm);
       } else {
         console.log('error submit!', fields);
       }

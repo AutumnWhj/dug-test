@@ -1,10 +1,10 @@
 @font-face {
   font-family: alibaba;
-  src: url('../assets/font/Alibaba-PuHuiTi-Light.otf');
+  src: url('../assets/fonts/Alibaba-PuHuiTi-Light.otf');
 }
 @font-face {
   font-family: AliHYH;
-  src: url('../assets/font/AliHYAiHei.ttf');
+  src: url('../assets/fonts/Alibaba-PuHuiTi-Regular.otf');
 }
 :root {
   --el-color-primary: #2c73ff;
