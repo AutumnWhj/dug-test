@@ -7,15 +7,15 @@
         <div class="text-gray-300/50 text-sm">欢迎回来</div>
       </div>
       <el-form class="w-full" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large">
-        <el-form-item prop="name">
-          <el-input v-model="ruleForm.name" placeholder="邮箱/电话号码" />
+        <el-form-item prop="username">
+          <el-input v-model="ruleForm.username" placeholder="用户名" />
         </el-form-item>
-        <el-form-item prop="name">
-          <el-input v-model="ruleForm.name" placeholder="密码" />
+        <el-form-item prop="password">
+          <el-input type="password" v-model="ruleForm.password" placeholder="密码" />
         </el-form-item>
       </el-form>
       <div class="w-full flex justify-between items-center mb-16">
-        <el-checkbox v-model="isRemember" label="记住密码" size="small" />
+        <el-checkbox v-model="isRemember" label="记住密码" size="small" @change="handleCheckChange" />
         <div class="text-primary text-xs cursor-pointer hover:text-blue-500/70" @click="toForgotPassword">忘记密码</div>
       </div>
       <el-button class="w-full rounded-3xl mb-12" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)"> Login </el-button>
@@ -29,25 +29,30 @@
 
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
+  import { ElMessage } from 'element-plus';
   import type { FormInstance, FormRules } from 'element-plus';
   import logoTextImage from '/@/assets/images/logo_text.png';
+  import { useUserStore } from '/@/store';
+  const userStore = useUserStore();
   const ruleFormRef = ref<FormInstance>();
-  const ruleForm = reactive({
-    name: '',
+  let ruleForm = reactive({
+    username: '',
+    password: '',
   });
+
   const rules = reactive<FormRules>({
-    name: [
-      { required: true, message: 'Please input Activity name', trigger: 'blur' },
-      { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
-    ],
+    username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+    password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
   });
 
   const isRemember = ref(false);
   const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return;
-    await formEl.validate((valid, fields) => {
+    await formEl.validate(async (valid, fields) => {
       if (valid) {
-        console.log('submit!');
+        console.log('submit!11111', ruleForm);
+        await userStore.login(ruleForm);
+        ElMessage.success('登录成功');
       } else {
         console.log('error submit!', fields);
       }
@@ -61,4 +66,19 @@
   const toForgotPassword = () => {
     router.push('/forgot-password');
   };
+
+  const handleCheckChange = () => {
+    if (isRemember.value) {
+      sessionStorage.setItem('is_remember', JSON.stringify(ruleForm));
+    } else {
+      sessionStorage.removeItem('is_remember');
+    }
+  };
+  onMounted(() => {
+    const localString = sessionStorage.getItem('is_remember');
+    if (localString) {
+      ruleForm = JSON.parse(localString);
+      isRemember.value = true;
+    }
+  });
 </script>

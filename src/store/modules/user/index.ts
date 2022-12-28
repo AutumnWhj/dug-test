@@ -23,12 +23,6 @@ export const useUserStore = defineStore('user', {
     },
   },
   actions: {
-    switchRoles() {
-      return new Promise((resolve) => {
-        this.role = this.role === 'user' ? 'user' : 'admin';
-        resolve(this.role);
-      });
-    },
     // 设置用户的信息
     setInfo(partial: Partial<UserState>) {
       this.$patch(partial);

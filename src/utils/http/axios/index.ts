@@ -4,7 +4,7 @@ import { IResponse } from './type';
 import { getToken } from '/@/utils/auth';
 
 // 如果请求话费了超过 `timeout` 的时间，请求将被中断
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 0;
 // 表示跨域请求时是否需要使用凭证
 axios.defaults.withCredentials = false;
 // axios.defaults.headers.common['token'] =  AUTH_TOKEN
@@ -12,7 +12,7 @@ axios.defaults.withCredentials = false;
 axios.defaults.headers.post['Access-Control-Allow-Origin-Type'] = '*';
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.BASE_URL + '',
+  baseURL: import.meta.env.VITE_APP_API_BASEURL + '',
   // transformRequest: [
   //   function (data) {
   //     //由于使用的 form-data传数据所以要格式化

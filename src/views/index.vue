@@ -1,10 +1,10 @@
 <template>
-  <div class="px-6 md:px-28 flex flex-col items-center">
-    <Home id="home" class="pt-24" />
+  <div class="px-6 md:px-28 pt-24 flex flex-col items-center">
+    <Home />
     <!-- About us -->
     <AboutUs id="about" class="pt-48" />
     <!-- Contact -->
-    <Contact id="contact" class="pt-48 mb-48" />
+    <Contact id="contact" class="pt-48 mb-64" />
   </div>
 </template>
 <script lang="ts" setup>

@@ -8,8 +8,8 @@
     </div>
     <div class="hidden md:flex text-2xl font-bold">
       <a class="mr-20 active text-gray-500 cursor-pointer" href="/">Home</a>
-      <a class="mr-20 text-gray-500" href="#about">About Us</a>
-      <a class="mr-8 text-gray-500" href="#contact">Contact</a>
+      <a v-if="isHomePath" class="mr-20 text-gray-500" href="#about">About Us</a>
+      <a v-if="isHomePath" class="mr-8 text-gray-500" href="#contact">Contact</a>
       <el-dropdown trigger="click">
         <div class="bg-white rounded-2xl flex items-center justify-center custom-shadow cursor-pointer">
           <span class="px-4 py-2 text-sm font-bold text-gray-500">
@@ -30,6 +30,10 @@
 <script lang="ts" setup>
   import logo from '/@/assets/images/logo.png';
   import SvgIcon from '/@/components/SvgIcon/index.vue';
+
+  const isHomePath = computed(() => {
+    return window.location.pathname === '/';
+  });
 </script>
 <style lang="less" scoped>
   .active {
