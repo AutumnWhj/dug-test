@@ -34,6 +34,7 @@ export default defineConfig({
         500: '#4E4E4E',
         600: '#0F0F0F',
         700: '#252525',
+        800: '#f9f9fa',
       },
       blue: {
         500: '#356EF6',

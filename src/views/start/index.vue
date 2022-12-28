@@ -10,13 +10,19 @@
         <div class="text-base text-black font-medium mb-3">首3月免费试用</div>
         <div class="text-base text-black font-medium">立即开始，节省您的时间</div>
       </div>
-      <el-button class="w-2/3 self-center rounded-3xl mb-8" size="large" color="#2C72FE"> Join us </el-button>
+      <el-button class="w-2/3 self-center !rounded-3xl mb-8" size="large" color="#2C72FE" @click="toRestaurant"> Join us </el-button>
     </div>
   </div>
   <LeaveMessage class="fixed left-14 bottom-14 w-auto" />
 </template>
 
 <script lang="ts" setup>
-  import LeaveMessage from './components/LeaveMessage.vue';
+  import { useRouter } from 'vue-router';
+  import LeaveMessage from '../components/LeaveMessage.vue';
   import logoTextImage from '/@/assets/images/logo_text.png';
+
+  const router = useRouter();
+  const toRestaurant = () => {
+    router.push('/restaurant/edit');
+  };
 </script>

@@ -1,12 +1,17 @@
 <template>
   <div>
-    <el-popover placement="top-start" popper-class="tip-popover" :width="242" trigger="hover" :visible="showTip">
-      <div class="text-base font-medium text-primary" @click="handleContact">如需人工帮助，可点击下方留言联系我们。</div>
+    <el-popover placement="top-start" popper-class="tip-popover" :width="256" trigger="hover" :visible="showTip">
+      <div v-if="!showComment" class="text-base font-medium text-primary" @click="handleContact"
+        >如需人工帮助，可点击下方留言联系我们。</div
+      >
       <template #reference>
         <div
-          v-if="!showComment"
+          v-show="!showComment"
           class="flex w-14 h-14 items-center justify-center bg-white rounded-full cursor-pointer card-shadow"
-          @click="showComment = true"
+          @click="
+            showComment = true;
+            showTip = false;
+          "
         >
           <el-image class="h-5 w-5" :src="commentImage" />
         </div>
@@ -35,8 +40,8 @@
             </div>
             <div class="text-white font-medium">DUG service</div>
           </div>
-          <el-input resize="none" type="textarea" :rows="4" placeholder="Type your message" />
-          <el-button class="rounded-3xl self-end mb-4 mr-4 w-20" color="#2C72FE" @click="sendMessage"> Send </el-button>
+          <el-input v-model="leaveMessage" resize="none" type="textarea" :rows="4" placeholder="Type your message" />
+          <el-button class="!rounded-3xl self-end mb-4 mr-4 w-20" color="#2C72FE" @click="sendMessage"> Send </el-button>
         </div>
 
         <div class="absolute -bottom-24 left-20 px-4 py-3 card-shadow bg-white text-sm font-medium text-primary rounded-2xl">
@@ -47,7 +52,7 @@
       </div>
       <template #reference>
         <div
-          v-if="showComment"
+          v-show="showComment"
           class="flex w-14 h-14 items-center justify-center bg-white rounded-full cursor-pointer card-shadow"
           @click="showComment = false"
         >
@@ -64,19 +69,21 @@
   const showTip = ref(localStorage.getItem('showTip') !== '1');
   const showComment = ref(false);
   const successComment = ref(false);
+  const leaveMessage = ref('');
   const handleContact = () => {
     localStorage.setItem('showTip', '1');
   };
   const sendMessage = () => {
     console.log('sendMessage: 1212');
+    showComment.value = false;
+    leaveMessage.value = '';
   };
 </script>
 <style lang="less">
   .tip-popover {
     padding: 28px 22px !important;
-    border-radius: 16px;
+    border-radius: 16px !important;
   }
-  .el-popover,
   .comment-popover {
     padding: 0 !important;
     border-radius: 16px !important;
