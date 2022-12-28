@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center w-full">
+  <div class="contact-form flex flex-col items-center w-2/5 max-w-[500px] border border-gray-200 rounded py-8 px-10 flex-1">
     <div class="mb-6 text-center">
       <p class="text-gray-700 mb-3 text-lg">请留系您的联系方式</p>
       <p class="text-gray-700/50 text-sm">我们会有专人联系您来解决您的问题</p>
@@ -8,14 +8,14 @@
       <el-form-item prop="name">
         <el-input v-model="ruleForm.name" placeholder="姓名" />
       </el-form-item>
-      <el-form-item prop="name">
-        <el-input v-model="ruleForm.name" placeholder="电子邮箱" />
+      <el-form-item prop="email">
+        <el-input v-model="ruleForm.email" placeholder="电子邮箱" />
       </el-form-item>
-      <el-form-item prop="name">
-        <el-input v-model="ruleForm.name" placeholder="联系电话" />
+      <el-form-item prop="phone_number">
+        <el-input v-model="ruleForm.phone_number" placeholder="联系电话" />
       </el-form-item>
-      <el-form-item prop="name">
-        <el-input v-model="ruleForm.name" type="textarea" placeholder="请描述一下你想咨询的内容" />
+      <el-form-item prop="content">
+        <el-input v-model="ruleForm.content" type="textarea" resize="none" :rows="5" placeholder="请描述一下你想咨询的内容" />
       </el-form-item>
       <el-form-item class="w-full">
         <div class="w-full flex justify-center">
@@ -41,15 +41,10 @@
   const dialogVisible = ref(false);
   const ruleFormRef = ref<FormInstance>();
   const ruleForm = reactive({
-    name: 'Hello',
-    region: '',
-    count: '',
-    date1: '',
-    date2: '',
-    delivery: false,
-    type: [],
-    resource: '',
-    desc: '',
+    name: '',
+    email: '',
+    phone_number: '',
+    content: '',
   });
   const rules = reactive<FormRules>({
     name: [
@@ -68,3 +63,13 @@
     });
   };
 </script>
+<style lang="less">
+  .contact-form {
+    .el-input__wrapper {
+      background: transparent !important;
+    }
+    .el-textarea__inner {
+      background: transparent;
+    }
+  }
+</style>

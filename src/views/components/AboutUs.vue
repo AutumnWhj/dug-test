@@ -10,7 +10,7 @@
       <div>Why choose us Why choose us</div>
       <div>Why choose us Why choose us Why choose us Why choose us Why choose us </div>
     </div>
-    <div class="mt-20 md:mx-24 flex flex-col md:flex-row items-center gap-10">
+    <div class="mt-20 md:mx-16 flex flex-col md:flex-row items-center gap-10">
       <div
         v-for="item in aboutTexts"
         :key="item.title"

@@ -14,7 +14,7 @@
           <el-input v-model="ruleForm.name" placeholder="验证码" />
         </el-form-item>
       </el-form>
-      <el-button class="w-full rounded-3xl mb-12" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)"> Login </el-button>
+      <el-button class="w-full !rounded-3xl mb-12" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)"> Login </el-button>
     </div>
   </div>
 </template>

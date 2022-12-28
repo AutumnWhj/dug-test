@@ -34,8 +34,8 @@ body {
   background: #f9f9fa !important;
 }
 .el-popper__arrow {
-  display: none;
+  display: none !important;
 }
 .el-dialog {
-  border-radius: 2rem;
+  border-radius: 2rem !important;
 }

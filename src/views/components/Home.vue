@@ -6,16 +6,10 @@
     </div>
     <div class="w-full md:w-[580px] h-96 bg-black mt-11"></div>
     <div class="flex justify-center gap-6 md:gap-16 mt-5">
-      <el-button class="w-60 h-20 !rounded-[48px] font-bold text-primary text-lg border-primary cursor-pointer" size="large" round>
+      <el-button class="w-60 !h-16 !rounded-[48px] !font-bold !text-primary !text-lg !border-primary cursor-pointer">
         <div class="py-4" @click="dialogVisible = true">Contact us</div>
       </el-button>
-      <el-button
-        class="w-60 h-20 !rounded-[48px] font-bold text-white text-lg cursor-pointer"
-        size="large"
-        round
-        color="#2c73ff"
-        @click="toLogin"
-      >
+      <el-button class="w-60 !h-16 !rounded-[48px] !font-bold text-white !text-lg cursor-pointer" color="#2c73ff" @click="toLogin">
         <div class="py-4">Login or Register</div>
       </el-button>
     </div>

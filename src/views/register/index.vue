@@ -32,7 +32,7 @@
           <span class="text-primary text-xs cursor-pointer hover:text-blue-500/70">条款和条件</span>
         </el-checkbox>
       </div>
-      <el-button class="w-full rounded-3xl mb-8" :disabled="!isAgreement" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
+      <el-button class="w-full !rounded-3xl mb-8" :disabled="!isAgreement" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
         Register
       </el-button>
       <div class="text-center">

@@ -18,7 +18,7 @@
         <el-checkbox v-model="isRemember" label="记住密码" size="small" @change="handleCheckChange" />
         <div class="text-primary text-xs cursor-pointer hover:text-blue-500/70" @click="toForgotPassword">忘记密码</div>
       </div>
-      <el-button class="w-full rounded-3xl mb-12" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)"> Login </el-button>
+      <el-button class="w-full !rounded-3xl mb-12" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)"> Login </el-button>
       <div class="text-center">
         <span class="text-gray-300/50 text-xs"> 没有账户？</span>
         <span class="text-primary text-xs cursor-pointer hover:text-blue-500/70" @click="toRegister">注册</span>

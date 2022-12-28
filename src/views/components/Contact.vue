@@ -12,7 +12,7 @@
         <p>WeChat：dugsolutions</p>
       </div>
     </div>
-    <ContactForm class="max-w-[500px] border border-gray-200 rounded py-8 px-10 flex-1" />
+    <ContactForm />
   </div>
 </template>
 <script lang="ts" setup>
