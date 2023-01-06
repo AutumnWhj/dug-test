@@ -3,19 +3,19 @@
     <div class="text-primary text-2xl font-bold">About us</div>
     <div class="flex items-center mt-3">
       <el-image class="w-20 h-20" :src="aboutHeaderImage" />
-      <div class="font-bold text-5xl">Why Choose Us</div>
+      <div class="font-bold text-6xl">Why Choose Us</div>
     </div>
     <div class="text-center text-xl text-gray-700/50 mt-10">
       <div>Why choose us Why choose us Why choose us </div>
       <div>Why choose us Why choose us</div>
       <div>Why choose us Why choose us Why choose us Why choose us Why choose us </div>
     </div>
-    <div class="mt-20 justify-between grid grid-cols-1 md:grid-cols-3 gap-10">
+    <div class="mt-20 justify-between grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
       <div
         v-for="(item, index) in aboutTexts"
         :key="item.title"
         :class="{ 'text-center': index > 3 }"
-        class="py-16 px-16 relative h-[29.375rem] border border-gray-200 rounded text-gray-700 hover:!text-white hover:bg-primary hover:scale-y-105 hover:translate-y-3 cursor-pointer"
+        class="py-16 px-16 md:w-96 relative h-[29.375rem] border border-gray-200 rounded text-gray-700 hover:!text-white hover:bg-primary hover:scale-y-105 hover:translate-y-3 cursor-pointer"
       >
         <div class="text-5xl font-bold leading-snug" :class="{ '!text-3xl !leading-normal': index > 3 }" v-html="item.title"></div>
         <div class="opacity-50 text-sm mt-10" :class="{ '!font-bold !opacity-100': index > 3 }" v-html="item.description"></div>
