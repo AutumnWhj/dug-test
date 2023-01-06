@@ -35,7 +35,7 @@
           :class="{ '!font-bold !opacity-100': index !== 1 && hoverIndex === index }"
           v-html="getDescription(index)"
         ></div>
-        <div v-if="index === 2" class="opacity-50 text-sm w-full absolute font-bold left-0 bottom-7"
+        <div v-if="index === 2 && hoverIndex === index" class="opacity-50 text-sm w-full absolute font-bold left-0 bottom-7"
           >（如有不了解操作，立即联系我们客服，解决您一切问题）</div
         >
       </div>
