@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col items-center w-full">
-    <div class="text-gray-600 text-7xl font-bold text-center leading-tight">
+    <div class="text-gray-600 text-[5.625rem] font-bold text-center leading-snug mb-6">
       Help solve your
-      <div class="mt-4"><span class="text-blue-500">Settlement</span> worries</div>
+      <div><span class="text-blue-500">Settlement</span> worries</div>
     </div>
     <div class="w-full md:w-[580px] h-96 bg-black mt-11"></div>
     <div class="flex justify-center gap-6 md:gap-16 mt-5">
