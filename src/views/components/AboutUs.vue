@@ -14,10 +14,10 @@
       <div
         v-for="item in aboutTexts"
         :key="item.title"
-        class="py-16 px-6 border border-gray-200 rounded text-gray-700 hover:!text-white hover:bg-primary cursor-pointer"
+        class="py-16 px-16 border w-96 border-gray-200 rounded text-gray-700 hover:!text-white hover:bg-primary cursor-pointer"
       >
-        <div class="text-2xl font-bold" v-html="item.title"></div>
-        <div class="opacity-50 text-sm mt-4">
+        <div class="text-5xl font-bold leading-snug" v-html="item.title"></div>
+        <div class="opacity-50 text-sm mt-10">
           {{ item.description }}
         </div>
       </div>

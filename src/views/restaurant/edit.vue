@@ -1,22 +1,30 @@
 <template>
-  <div class="flex flex-col items-center relative mt-16">
-    <div class="w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
+  <div class="flex flex-col items-center relative mt-12">
+    <div class="w-2/5 min-w-xl card-shadow flex flex-col bg-white py-10 px-12 rounded-3xl">
       <div class="text-center mb-8">
         <div class="text-gray-300 text-xl mb-3">填写您的餐厅资料</div>
         <div class="text-gray-300/50 text-sm">你好，XXX(你的名字)</div>
       </div>
       <el-form class="w-full" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large">
-        <el-form-item prop="name" label="餐厅名称">
-          <el-input v-model="ruleForm.name" placeholder="请输入餐厅名称" />
+        <el-form-item prop="name">
+          <el-input v-model="ruleForm.name">
+            <template #prefix> <div class="!mr-5">餐厅名称</div> </template>
+          </el-input>
         </el-form-item>
-        <el-form-item prop="address" label="餐厅地址">
-          <el-input v-model="ruleForm.address" placeholder="请输入餐厅地址" />
+        <el-form-item prop="address">
+          <el-input v-model="ruleForm.address">
+            <template #prefix> <div class="!mr-5">餐厅地址</div> </template>
+          </el-input>
         </el-form-item>
-        <el-form-item prop="phone_number" label="联系电话">
-          <el-input v-model="ruleForm.phone_number" placeholder="请输入联系电话" />
+        <el-form-item prop="phone_number">
+          <el-input v-model="ruleForm.phone_number">
+            <template #prefix> <div class="!mr-5">联系电话</div> </template>
+          </el-input>
         </el-form-item>
-        <el-form-item prop="time" label="获取Summary order时间">
+        <el-form-item prop="time">
           <el-select v-model="ruleForm.time" size="large" placeholder="请选择获取时间" class="w-full">
+            <template #prefix> <div class="!mr-5">获取Summary order时间</div> </template>
+
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
@@ -31,13 +39,16 @@
               :before-upload="beforeAvatarUpload"
             >
               <el-image v-if="imageUrl" :src="imageUrl" class="avatar" />
-              <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+              <!-- <el-icon v-else ><Plus /></el-icon> -->
+              <div v-else class="avatar-uploader-icon flex items-center justify-center">
+                <el-image class="w-10" :src="plusImage" />
+              </div>
             </el-upload>
             <div class="ml-6 text-gray-300/50 text-sm">请添加餐厅LOGO（PNG格式）</div>
           </div>
         </el-form-item>
       </el-form>
-      <el-button class="w-2/3 self-center !rounded-3xl mt-9 mb-8" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
+      <el-button class="w-2/3 self-center !rounded-3xl mt-4" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
         添加餐厅
       </el-button>
     </div>
@@ -48,8 +59,8 @@
 <script lang="ts" setup>
   import LeaveMessage from '../components/LeaveMessage.vue';
   import { ElMessage } from 'element-plus';
-  import { Plus } from '@element-plus/icons-vue';
   import type { FormInstance, FormRules, UploadProps } from 'element-plus';
+  import plusImage from '/@/assets/images/plus.png';
 
   const ruleFormRef = ref<FormInstance>();
   let ruleForm = reactive({
@@ -107,11 +118,14 @@
     });
   };
 </script>
-<style scoped>
+<style lang="less" scoped>
   .avatar-uploader .avatar {
     width: 178px;
     height: 178px;
     display: block;
+  }
+  :deep(.el-input__wrapper) {
+    box-shadow: none !important;
   }
 </style>
 
@@ -129,7 +143,7 @@
     border-color: var(--el-color-primary);
   }
 
-  .el-icon.avatar-uploader-icon {
+  .avatar-uploader-icon {
     font-size: 40px;
     color: #e6e6e6;
     width: 145px;

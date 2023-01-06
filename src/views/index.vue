@@ -1,5 +1,5 @@
 <template>
-  <div class="px-6 md:px-28 pt-24 flex flex-col items-center">
+  <div class="px-6 md:px-28 pt-20 flex flex-col items-center">
     <Home />
     <!-- About us -->
     <AboutUs id="about" class="pt-48" />

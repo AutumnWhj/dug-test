@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center w-full">
-    <div class="text-gray-600 text-7xl font-bold text-center">
+    <div class="text-gray-600 text-7xl font-bold text-center leading-tight">
       Help solve your
       <div class="mt-4"><span class="text-blue-500">Settlement</span> worries</div>
     </div>

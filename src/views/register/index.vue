@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-4 flex flex-col items-center">
+  <div class="pt-4 flex flex-col items-center mb-24">
     <el-image class="h-28 mb-10" :src="logoTextImage" />
     <div class="min-w-96 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="text-center mb-8">
@@ -105,3 +105,9 @@
     router.push('/login');
   };
 </script>
+
+<style lang="less" scoped>
+  :deep(.el-input__wrapper) {
+    box-shadow: none !important;
+  }
+</style>

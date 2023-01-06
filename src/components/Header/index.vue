@@ -1,17 +1,17 @@
 <template>
   <header id="header" class="bg-gray-100 z-10 w-full sticky top-0 flex items-center px-16 py-8">
     <div class="flex-1">
-      <router-link to="/" class="flex items-center gap-4 text-lg text-2xl font-bold">
+      <router-link v-if="!isLoginPath" to="/" class="flex items-center gap-4 text-lg text-2xl font-bold">
         <img class="h-10" :src="logo" alt="" />
         DUG Solutions
       </router-link>
     </div>
     <div class="hidden md:flex text-2xl font-bold">
-      <a class="mr-20 active text-gray-500 cursor-pointer" href="/">Home</a>
-      <a v-if="isHomePath" class="mr-20 text-gray-500" href="#about">About Us</a>
-      <a v-if="isHomePath" class="mr-8 text-gray-500" href="#contact">Contact</a>
+      <a class="mr-20 text-gray-500 cursor-pointer" :class="{ active: route.hash === '#home' }" href="#home" @click="handleHome">Home</a>
+      <a v-if="isHomePath" class="mr-20 text-gray-500" :class="{ active: route.hash === '#about' }" href="#about">About Us</a>
+      <a v-if="isHomePath" class="mr-9 text-gray-500" :class="{ active: route.hash === '#contact' }" href="#contact">Contact</a>
       <el-dropdown trigger="click">
-        <div class="bg-white rounded-2xl flex items-center justify-center custom-shadow cursor-pointer">
+        <div class="bg-white rounded-2xl flex items-center justify-center card-shadow cursor-pointer">
           <span class="px-4 py-2 text-sm font-bold text-gray-500">
             English (USA)
             <SvgIcon name="svg-arrow" class="text-xs ml-1" />
@@ -30,10 +30,21 @@
 <script lang="ts" setup>
   import logo from '/@/assets/images/logo.png';
   import SvgIcon from '/@/components/SvgIcon/index.vue';
+  import { useRoute, useRouter } from 'vue-router';
+  const route = useRoute();
+  const router = useRouter();
+  console.log('route11111: ', route.path);
 
   const isHomePath = computed(() => {
-    return window.location.pathname === '/';
+    return route.path === '/';
   });
+  const isLoginPath = computed(() => {
+    return ['/login', '/register'].includes(route.path);
+  });
+  const handleHome = () => {
+    window.scrollTo(0, 0);
+    router.push('/');
+  };
 </script>
 <style lang="less" scoped>
   .active {

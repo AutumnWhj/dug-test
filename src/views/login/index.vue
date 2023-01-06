@@ -8,7 +8,7 @@
       </div>
       <el-form class="w-full" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large">
         <el-form-item prop="username">
-          <el-input v-model="ruleForm.username" placeholder="用户名" />
+          <el-input v-model="ruleForm.username" placeholder="用户名" size="large" />
         </el-form-item>
         <el-form-item prop="password">
           <el-input type="password" v-model="ruleForm.password" placeholder="密码" />
@@ -82,3 +82,8 @@
     }
   });
 </script>
+<style lang="less" scoped>
+  :deep(.el-input__wrapper) {
+    box-shadow: none !important;
+  }
+</style>

@@ -5,8 +5,8 @@ import piniaStore from './store';
 import '/@/styles/index.less';
 import '/@/styles/reset.less';
 import 'uno.css';
-import '/@/styles/index.css';
 import 'element-plus/dist/index.css';
+import '/@/styles/index.css';
 
 // 支持SVG
 import 'virtual:svg-icons-register';

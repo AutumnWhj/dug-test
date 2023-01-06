@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center relative mt-16">
+  <div class="flex flex-col items-center relative mt-12">
     <div class="w-3/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div v-if="!showDetail" class="w-full flex flex-col">
         <div class="text-center mb-8">

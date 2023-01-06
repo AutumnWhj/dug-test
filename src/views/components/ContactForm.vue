@@ -1,5 +1,5 @@
 <template>
-  <div class="contact-form flex flex-col items-center w-2/5 max-w-[500px] border border-gray-200 rounded py-8 px-10 flex-1">
+  <div class="contact-form w-full flex flex-col items-center w-2/5 max-w-[500px] border border-gray-200 rounded py-10 px-10 flex-1">
     <div class="mb-6 text-center">
       <p class="text-gray-700 mb-3 text-lg">请留系您的联系方式</p>
       <p class="text-gray-700/50 text-sm">我们会有专人联系您来解决您的问题</p>
@@ -17,19 +17,17 @@
       <el-form-item prop="content">
         <el-input v-model="ruleForm.content" type="textarea" resize="none" :rows="5" placeholder="请描述一下你想咨询的内容" />
       </el-form-item>
-      <el-form-item class="w-full">
-        <div class="w-full flex justify-center">
-          <el-button
-            class="w-3/5 h-16 !rounded-[36px] font-bold text-white text-lg"
-            size="large"
-            round
-            color="#070707"
-            @click="submitForm(ruleFormRef)"
-          >
-            <div class="py-4">Leave us a message</div>
-          </el-button>
-        </div>
-      </el-form-item>
+      <div class="w-full flex justify-center mt-10">
+        <el-button
+          class="w-3/5 !h-16 !rounded-[36px] !font-bold text-white !text-lg"
+          size="large"
+          round
+          color="#070707"
+          @click="submitForm(ruleFormRef)"
+        >
+          <div class="py-4">Leave us a message</div>
+        </el-button>
+      </div>
     </el-form>
   </div>
   <Feedback v-if="dialogVisible" v-model="dialogVisible" />
