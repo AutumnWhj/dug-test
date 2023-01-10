@@ -53,6 +53,7 @@
         console.log('submit!11111', ruleForm);
         await userStore.login(ruleForm);
         ElMessage.success('登录成功');
+        router.push('/restaurant');
       } else {
         console.log('error submit!', fields);
       }

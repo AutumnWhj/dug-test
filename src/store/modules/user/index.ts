@@ -5,17 +5,7 @@ import { UserState } from './types';
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
-    user_name: undefined,
-    avatar: undefined,
-    organization: undefined,
-    location: undefined,
-    email: undefined,
-    blogJuejin: undefined,
-    blogZhihu: undefined,
-    blogGithub: undefined,
-    profileBio: undefined,
-    devLanguages: undefined,
-    role: '',
+    user_id: 0,
   }),
   getters: {
     userProfile(state: UserState): UserState {
@@ -38,12 +28,12 @@ export const useUserStore = defineStore('user', {
     },
     // 异步登录并存储token
     async login(loginForm: LoginData) {
-      const result = await userLogin(loginForm);
-      const token = result?.token;
+      const { token, user_id } = await userLogin(loginForm);
       if (token) {
         setToken(token);
+        this.setInfo({ user_id });
       }
-      return result;
+      return token;
     },
     // Logout
     async logout() {

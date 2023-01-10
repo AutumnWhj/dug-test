@@ -50,6 +50,8 @@
   import passwordStrength from '/@/components/PasswordStrength/index.vue';
   import logoTextImage from '/@/assets/images/logo_text.png';
   import { register } from '/@/api/user';
+  import { useUserStore } from '/@/store';
+  const userStore = useUserStore();
 
   const ruleFormRef = ref<FormInstance>();
   const ruleForm = reactive({
@@ -59,13 +61,13 @@
     phone_number: '',
     repeatPassword: '',
   });
-  const validatorPassword = (_rule, value, callback) => {
-    if (value !== ruleForm.password) {
-      callback('两次输入的密码不一致');
-    } else {
-      callback();
-    }
-  };
+  // const validatorPassword = (_rule, value, callback) => {
+  //   if (value !== ruleForm.password) {
+  //     callback('两次输入的密码不一致');
+  //   } else {
+  //     callback();
+  //   }
+  // };
   const rules = reactive<FormRules>({
     email: [
       { required: true, message: '请输入邮箱', trigger: 'blur' },
@@ -81,7 +83,7 @@
     password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
     repeatPassword: [
       { required: true, message: '请再次输入密码', trigger: 'blur' },
-      { validator: validatorPassword, trigger: 'blur' },
+      // { validator: validatorPassword, trigger: 'blur' },
     ],
   });
 
@@ -91,8 +93,16 @@
     await formEl.validate(async (valid, fields) => {
       if (valid) {
         console.log('submit!', ruleForm);
+        if (ruleForm.repeatPassword !== ruleForm.password) {
+          ElMessage.warning('两次输入的密码不一致');
+          return;
+        }
         await register(ruleForm);
         ElMessage.success('注册成功');
+        await userStore.login({
+          username: ruleForm.username,
+          password: ruleForm.password,
+        });
         router.push('/start');
       } else {
         console.log('error submit!', fields);

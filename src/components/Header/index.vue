@@ -31,6 +31,7 @@
   import logo from '/@/assets/images/logo.png';
   import SvgIcon from '/@/components/SvgIcon/index.vue';
   import { useRoute, useRouter } from 'vue-router';
+  import { isLogin } from '/@/utils/auth';
   const route = useRoute();
   const router = useRouter();
   console.log('route11111: ', route.path);
@@ -42,8 +43,12 @@
     return ['/login', '/register'].includes(route.path);
   });
   const handleHome = () => {
-    window.scrollTo(0, 0);
-    router.push('/');
+    if (isLogin()) {
+      router.push('/restaurant');
+    } else {
+      window.scrollTo(0, 0);
+      router.push('/');
+    }
   };
 </script>
 <style lang="less" scoped>

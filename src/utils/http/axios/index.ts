@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { showMessage } from './status';
 import { IResponse } from './type';
-import { getToken } from '/@/utils/auth';
+import { getToken, TokenPrefix } from '/@/utils/auth';
 
 // 如果请求话费了超过 `timeout` 的时间，请求将被中断
 axios.defaults.timeout = 0;
@@ -54,8 +54,8 @@ axiosInstance.interceptors.response.use(
 axiosInstance.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const token = getToken();
-    if (token) {
-      // config.headers.Authorization = `${TokenPrefix}${token}`
+    if (token && config.headers) {
+      config.headers.Authorization = `${TokenPrefix}${token}`;
     }
     return config;
   },
@@ -69,10 +69,9 @@ const request = <T = any>(config: AxiosRequestConfig): Promise<T> => {
   return new Promise((resolve) => {
     axiosInstance.request<any, AxiosResponse<IResponse>>(conf).then((res: AxiosResponse<IResponse>) => {
       // resolve(res as unknown as Promise<T>);
-      const {
-        data: { result },
-      } = res;
-      resolve(result as T);
+
+      const { data } = res;
+      resolve(data as T);
     });
   });
 };

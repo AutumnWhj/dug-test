@@ -21,14 +21,14 @@
             <template #prefix> <div class="!mr-5">联系电话</div> </template>
           </el-input>
         </el-form-item>
-        <el-form-item prop="time">
-          <el-select v-model="ruleForm.time" size="large" placeholder="请选择获取时间" class="w-full">
+        <el-form-item prop="kind">
+          <el-select v-model="ruleForm.kind" size="large" placeholder="请选择获取时间" class="w-full">
             <template #prefix> <div class="!mr-5">获取Summary order时间</div> </template>
 
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
-        <el-form-item prop="imageUrl">
+        <el-form-item prop="image">
           <div class="w-full flex items-center">
             <el-upload
               class="avatar-uploader"
@@ -38,7 +38,7 @@
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
             >
-              <el-image v-if="imageUrl" :src="imageUrl" class="avatar" />
+              <el-image v-if="ruleForm.image" :src="ruleForm.image" class="avatar" />
               <!-- <el-icon v-else ><Plus /></el-icon> -->
               <div v-else class="avatar-uploader-icon flex items-center justify-center">
                 <el-image class="w-10" :src="plusImage" />
@@ -49,7 +49,7 @@
         </el-form-item>
       </el-form>
       <el-button class="w-2/3 self-center !rounded-3xl mt-4" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
-        添加餐厅
+        {{ restaurantId ? '修改餐厅' : '添加餐厅' }}
       </el-button>
     </div>
   </div>
@@ -61,38 +61,63 @@
   import { ElMessage } from 'element-plus';
   import type { FormInstance, FormRules, UploadProps } from 'element-plus';
   import plusImage from '/@/assets/images/plus.png';
+  import { createRestaurant, updateRestaurant, getRestaurantDetail } from '/@/api/user/index';
+  import { useRoute, useRouter } from 'vue-router';
+  const route = useRoute();
+  const router = useRouter();
+  const { restaurantId } = route.query;
+  console.log('restaurantId-----: ', restaurantId);
+  const restaurantInfo: any = ref({});
 
   const ruleFormRef = ref<FormInstance>();
   let ruleForm = reactive({
     name: '',
     address: '',
     phone_number: '',
-    time: '',
+    kind: '',
+    image:
+      'https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ed8c2069849744f299b6c551600ac310~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp?',
+  });
+
+  onBeforeMount(async () => {
+    if (restaurantId) {
+      const data = await getRestaurantDetail({ restaurant_id: Number(restaurantId) });
+      console.log('getRestaurantDetail---data: ', data);
+      restaurantInfo.value = data;
+      const { image, kind, name, address, phone_number } = data;
+      ruleForm.name = name;
+      ruleForm.image = image;
+      ruleForm.kind = kind;
+      ruleForm.address = address;
+      ruleForm.phone_number = phone_number;
+    }
   });
 
   const rules = reactive<FormRules>({
-    username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-    password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+    name: [{ required: true, message: '请输入餐厅名称', trigger: 'blur' }],
+    address: [{ required: true, message: '请输入餐厅地址', trigger: 'blur' }],
+    phone_number: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
+    kind: [{ required: true, message: '请选择获取Summary order时间', trigger: 'blur' }],
+    image: [{ required: true, message: '请添加餐厅LOGO', trigger: 'blur' }],
   });
   const options = [
     {
-      value: '每三天一次',
+      value: 0,
       label: '每三天一次',
     },
     {
-      value: '每五天一次',
+      value: 1,
       label: '每五天一次',
     },
     {
-      value: '每七天一次',
+      value: 2,
       label: '每七天一次',
     },
   ];
-  const imageUrl = ref('');
 
   const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
     console.log('uploadFile111: ', uploadFile, response);
-    imageUrl.value = URL.createObjectURL(uploadFile.raw!);
+    ruleForm.image = URL.createObjectURL(uploadFile.raw!);
   };
 
   const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
@@ -101,7 +126,7 @@
     //   return false;
     // } else
     if (rawFile.size / 1024 / 1024 > 2) {
-      ElMessage.error('Avatar picture size can not exceed 2MB!');
+      ElMessage.error('LOGO大小不能超过 2MB!');
       return false;
     }
     return true;
@@ -111,7 +136,19 @@
     if (!formEl) return;
     await formEl.validate(async (valid, fields) => {
       if (valid) {
-        console.log('submit!11111', ruleForm);
+        if (restaurantId) {
+          await updateRestaurant({ ...ruleForm, restaurant_id: Number(restaurantId) });
+          ElMessage.success('修改成功');
+        } else {
+          const params = {
+            ...ruleForm,
+            user_id: 1,
+          };
+          console.log('params: ', params);
+          await createRestaurant(params);
+          ElMessage.success('新建成功');
+        }
+        router.push('/restaurant');
       } else {
         console.log('error submit!', fields);
       }

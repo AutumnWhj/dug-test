@@ -39,3 +39,8 @@ body {
 .el-dialog {
   border-radius: 2rem !important;
 }
+.el-empty__description p {
+  color: #8a8a8a !important;
+  font-size: 24px;
+  font-weight: 700;
+}
