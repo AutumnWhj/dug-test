@@ -1,17 +1,12 @@
 <template>
   <div>
     <el-popover placement="top-start" popper-class="tip-popover" :width="256" trigger="hover" :visible="showTip">
-      <div v-if="!showComment" class="text-base font-medium text-primary" @click="handleContact"
-        >如需人工帮助，可点击下方留言联系我们。</div
-      >
+      <div v-if="!showComment" class="text-base font-medium text-primary">如需人工帮助，可点击下方留言联系我们。</div>
       <template #reference>
         <div
           v-show="!showComment"
           class="flex w-14 h-14 items-center justify-center bg-white rounded-full cursor-pointer card-shadow"
-          @click="
-            showComment = true;
-            showTip = false;
-          "
+          @click="handleContact"
         >
           <el-image class="h-5 w-5" :src="commentImage" />
         </div>
@@ -66,16 +61,22 @@
   import commentImage from '/@/assets/images/leave_message_comment.png';
   import closeIcon from '/@/assets/images/close.png';
   import logoImage from '/@/assets/images/logo.png';
+  import { leaveMessage as leaveMessageApi } from '/@/api/user/index';
+
   const showTip = ref(localStorage.getItem('showTip') !== '1');
   const showComment = ref(false);
   const successComment = ref(false);
   const leaveMessage = ref('');
   const handleContact = () => {
+    showComment.value = true;
+    showTip.value = false;
     localStorage.setItem('showTip', '1');
   };
-  const sendMessage = () => {
-    console.log('sendMessage: 1212');
-    showComment.value = false;
+  const sendMessage = async () => {
+    await leaveMessageApi({
+      message: leaveMessage.value,
+    });
+    successComment.value = true;
     leaveMessage.value = '';
   };
 </script>

@@ -3,7 +3,7 @@
     <div class="w-3/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="flex items-center self-center">
         <div class="flex items-center flex-col mb-6">
-          <el-image class="h-20 mr-3" :src="currentRestaurant?.image" />
+          <el-image class="h-20 mr-3 mb-2" :src="currentRestaurant?.image" />
           <div class="text-black font-medium text-sm">{{ currentRestaurant?.name }}</div>
         </div>
         <el-image v-if="hasNext" class="h-4 ml-4 cursor-pointer" :src="arrowRightImage" @click="handleNextPage" />
