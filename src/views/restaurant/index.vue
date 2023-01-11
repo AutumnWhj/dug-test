@@ -57,7 +57,7 @@
   });
 
   const handleReport = (data) => {
-    router.push(`/restaurant/${data.id}`);
+    router.push(`/restaurant/detail?restaurantId=${data.id}`);
   };
   const toAddRestaurant = () => {
     router.push('/restaurant/edit');

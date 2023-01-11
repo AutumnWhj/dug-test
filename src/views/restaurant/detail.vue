@@ -1,10 +1,14 @@
 <template>
   <div class="flex flex-col items-center relative mt-12 mb-20">
     <div class="w-3/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
-      <div class="flex items-center flex-col mb-6">
-        <el-image class="h-20 mr-3" :src="currentRestaurant?.image" />
-        <div class="text-black font-medium text-sm">{{ currentRestaurant?.name }}</div>
+      <div class="flex items-center self-center">
+        <div class="flex items-center flex-col mb-6">
+          <el-image class="h-20 mr-3" :src="currentRestaurant?.image" />
+          <div class="text-black font-medium text-sm">{{ currentRestaurant?.name }}</div>
+        </div>
+        <el-image v-if="hasNext" class="h-4 ml-4 cursor-pointer" :src="arrowRightImage" @click="handleNextPage" />
       </div>
+
       <el-empty v-if="report.length === 0" description="暂未生成报告" />
       <el-checkbox-group v-model="checkList" @change="handleCheckChange">
         <div v-for="item in report" :key="item.id" class="report-list mb-4 bg-gray-800 p-5 rounded-2xl">
@@ -32,7 +36,7 @@
           </div>
         </div>
       </el-checkbox-group>
-      <div class="flex justify-end items-center">
+      <div v-if="report.length" class="flex justify-end items-center">
         <el-checkbox v-model="allCheck" label="全选" @change="handleCheckAll" />
         <div
           class="ml-4 button-shadow bg-white px-5 py-2 flex items-center justify-center rounded-2xl gap-3 cursor-pointer"
@@ -43,6 +47,7 @@
         </div>
       </div>
       <el-pagination
+        v-if="report.length"
         class="flex justify-center mt-5"
         layout="prev, pager, next"
         :page-count="pageCount"
@@ -55,21 +60,24 @@
 
 <script lang="ts" setup>
   import LeaveMessage from '../components/LeaveMessage.vue';
+  import arrowRightImage from '/@/assets/images/arrow-right.png';
   import pdfIconImage from '/@/assets/images/pdf-icon.png';
   import { getRestaurantReport, getRestaurants } from '/@/api/user/index';
   import { useRoute } from 'vue-router';
   import { compressAndDownload, downloadFile } from '/@/utils/download';
   import { ElMessage } from 'element-plus';
+  import router from '/@/router';
   const report: any = ref([]);
   const restaurants: any = ref([]);
   const checkList: any = ref([]);
   const allCheck = ref(false);
   const route = useRoute();
   const pageCount = ref(0);
-  const { id } = route.params;
+  const { restaurantId } = route.query;
+  console.log('restaurantId: ', restaurantId);
   const defaultParams = reactive({
     user_id: 1,
-    restaurant_id: Number(id),
+    restaurant_id: Number(restaurantId),
     page_num: 1,
   });
 
@@ -88,8 +96,20 @@
     restaurants.value = await getRestaurants({ user_id: 1 });
   });
   const currentRestaurant = computed(() => {
-    return restaurants.value.find((item) => item.id === Number(id));
+    return restaurants.value.find((item) => item.id === Number(restaurantId));
   });
+  const hasNext = computed(() => {
+    const index = (restaurants.value || []).findIndex((item) => item.id === Number(restaurantId));
+    return !!restaurants.value[index + 1];
+  });
+
+  watch(
+    () => restaurantId,
+    (value) => {
+      console.log('value: ', value);
+      getReports(defaultParams);
+    },
+  );
 
   const handleCheckChange = (value) => {
     console.log('handleCheckChange---value: ', value);
@@ -131,6 +151,14 @@
       compressAndDownload(list);
     } else {
       downloadFile(filepath, filename);
+    }
+  };
+  const handleNextPage = () => {
+    const index = restaurants.value.findIndex((item) => item.id === Number(restaurantId));
+    const { id: nextId } = restaurants.value[index + 1];
+    if (nextId) {
+      router.replace(`/restaurant/detail?restaurantId=${nextId}`);
+      setTimeout(() => location.reload(), 100);
     }
   };
 </script>

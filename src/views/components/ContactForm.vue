@@ -14,8 +14,8 @@
       <el-form-item prop="phone_number">
         <el-input v-model="ruleForm.phone_number" placeholder="联系电话" />
       </el-form-item>
-      <el-form-item prop="content">
-        <el-input v-model="ruleForm.content" type="textarea" resize="none" :rows="5" placeholder="请描述一下你想咨询的内容" />
+      <el-form-item prop="message">
+        <el-input v-model="ruleForm.message" type="textarea" resize="none" :rows="5" placeholder="请描述一下你想咨询的内容" />
       </el-form-item>
       <div class="w-full flex justify-center mt-10">
         <el-button
@@ -34,26 +34,33 @@
 </template>
 <script lang="ts" setup>
   import { reactive, ref } from 'vue';
-  import type { FormInstance, FormRules } from 'element-plus';
+  import { ElMessage, FormInstance, FormRules } from 'element-plus';
   import Feedback from '/@/components/Dialog/Feedback.vue';
+  import { leaveMessage } from '/@/api/user/index';
   const dialogVisible = ref(false);
   const ruleFormRef = ref<FormInstance>();
-  const ruleForm = reactive({
+  const initForm = {
     name: '',
     email: '',
     phone_number: '',
-    content: '',
+    message: '',
+  };
+  const ruleForm = reactive({
+    ...initForm,
   });
-  const rules = reactive<FormRules>({
-    name: [
-      { required: true, message: 'Please input Activity name', trigger: 'blur' },
-      { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
-    ],
-  });
+  const rules = reactive<FormRules>({});
   const submitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return;
-    await formEl.validate((valid, fields) => {
+    await formEl.validate(async (valid, fields) => {
       if (valid) {
+        const { name, email, phone_number, message } = ruleForm;
+        if (!name || !email || !phone_number || !message) {
+          ElMessage.warning('请输入您的联系方式及问题，我们会有专人联系您解决问题');
+          return;
+        }
+        await leaveMessage(ruleForm);
+        dialogVisible.value = true;
+        Object.assign(ruleForm, initForm);
         console.log('submit!');
       } else {
         console.log('error submit!', fields);

@@ -43,7 +43,7 @@
     return ['/login', '/register'].includes(route.path);
   });
   const handleHome = () => {
-    if (isLogin()) {
+    if (isLogin() && !isLoginPath.value) {
       router.push('/restaurant');
     } else {
       window.scrollTo(0, 0);
