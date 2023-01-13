@@ -4,7 +4,18 @@
       Help solve your
       <div><span class="text-blue-500">Settlement</span> worries</div>
     </div>
-    <div class="w-full md:w-[580px] h-96 bg-black mt-11"></div>
+    <div class="w-full md:w-[580px] h-96 bg-black mt-11">
+      <iframe
+        src="//player.bilibili.com/player.html?aid=92105699&bvid=BV1X7411P7kE&cid=157270764&page=1"
+        scrolling="no"
+        border="0"
+        frameborder="no"
+        framespacing="0"
+        allowfullscreen="true"
+        class="w-full h-full"
+      >
+      </iframe>
+    </div>
     <div class="flex justify-center gap-6 md:gap-16 mt-8">
       <el-button class="w-60 !h-16 !rounded-[48px] !font-bold !text-primary !text-lg !border-primary cursor-pointer">
         <div class="py-4" @click="dialogVisible = true">Contact us</div>

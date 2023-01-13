@@ -51,6 +51,7 @@
     if (!formEl) return;
     await formEl.validate(async (valid, fields) => {
       if (valid) {
+        userStore.resetInfo();
         console.log('submit!11111', ruleForm);
         await userStore.login(ruleForm);
         if (isLogin()) {

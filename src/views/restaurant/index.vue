@@ -6,8 +6,8 @@
           <div class="text-gray-300 text-xl mb-3">请选择餐厅查看数据</div>
           <div class="text-gray-300/50 text-sm">你好，XXX(你的名字)</div>
         </div>
+        <el-empty v-if="restaurants.length === 0" description="暂无数据" />
         <div v-for="item in restaurants" :key="item.id" class="mb-4 bg-gray-800 px-12 rounded-2xl">
-          <el-empty v-if="restaurants.length === 0" description="暂无数据" />
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <el-image class="h-20 w-20 mr-3" :src="item.image">
@@ -48,10 +48,13 @@
   import { Picture as IconPicture } from '@element-plus/icons-vue';
   import { getRestaurants } from '/@/api/user/index';
   import { useRouter } from 'vue-router';
+  import { useUserStore } from '/@/store';
   const router = useRouter();
   const restaurants: any = ref([]);
+  const userStore = useUserStore();
   onBeforeMount(async () => {
-    const data = await getRestaurants({ user_id: 1 });
+    const { user_id } = userStore;
+    const data = await getRestaurants({ user_id });
     console.log('data----: ', data);
     restaurants.value = data;
   });

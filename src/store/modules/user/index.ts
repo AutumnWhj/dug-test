@@ -45,4 +45,8 @@ export const useUserStore = defineStore('user', {
       // location.reload();
     },
   },
+  persist: {
+    storage: localStorage,
+    paths: ['user_id'],
+  },
 });

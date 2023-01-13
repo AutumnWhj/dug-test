@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center w-full">
+  <div class="flex flex-col items-center w-full relative">
     <div class="text-primary text-2xl font-bold">About us</div>
     <div class="flex items-center mt-3">
       <el-image class="w-20 h-20" :src="aboutHeaderImage" />
@@ -40,10 +40,12 @@
         >
       </div>
     </div>
+    <el-image class="h-md !absolute left-[-180px] top-[80px]" :src="oneImage" />
   </div>
 </template>
 <script lang="ts" setup>
   import aboutHeaderImage from '/@/assets/images/about-header.png';
+  import oneImage from '/@/assets/images/01.png';
   const isHover: any = ref('normal');
   const hoverIndex: any = ref(-1);
   const aboutTexts = [

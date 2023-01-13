@@ -27,8 +27,8 @@
               </el-button>
             </div>
             <el-form class="w-full mt-7" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large">
-              <el-form-item prop="doordash_name">
-                <el-input v-model="ruleForm.doordash_name" placeholder="DooDash账号" size="large" />
+              <el-form-item prop="doordash_username">
+                <el-input v-model="ruleForm.doordash_username" placeholder="DooDash账号" size="large" />
               </el-form-item>
               <el-form-item prop="doordash_password">
                 <el-input type="doordash_password" v-model="ruleForm.doordash_password" placeholder="DooDash密码" />
@@ -88,7 +88,7 @@
             </div>
           </div>
         </div>
-        <el-button plain class="w-2/3 self-center !rounded-3xl" size="large" color="#2C72FE" @click="toAddRestaurant"> 添加完成 </el-button>
+        <el-button class="w-2/3 self-center !rounded-3xl" size="large" color="#2C72FE" @click="toAddRestaurant"> 添加完成 </el-button>
         <div class="text-#8F92A1 text-sm mt-5 text-center">如需验证，我们有专人联系您来通过验证</div>
       </div>
     </div>
@@ -111,12 +111,12 @@
 
   const ruleFormRef = ref<FormInstance>();
   let ruleForm = reactive({
-    doordash_name: '',
+    doordash_username: '',
     doordash_password: '',
   });
 
   const rules = reactive<FormRules>({
-    doordash_name: [{ required: true, message: '请输入DooDash账号', trigger: 'blur' }],
+    doordash_username: [{ required: true, message: '请输入DooDash账号', trigger: 'blur' }],
     doordash_password: [{ required: true, message: '请输入DooDash密码', trigger: 'blur' }],
   });
 
@@ -127,7 +127,7 @@
     restaurant.value = data;
   });
   const checkButtonStatus = (status) => {
-    if (status === 0) return { text: '已添加', color: '#2C72FE' };
+    if (status === 0) return { text: '添加', color: '#2C72FE' };
     if (status === 1) return { text: '绑定成功', color: '#2C72FE', type: 'plain' };
     if (status === 2) return { text: '审核中', color: '#A6A6A6' };
   };
@@ -153,17 +153,16 @@
     console.log('platform:az ', platform);
     const { doordash_status, ubereats_status, grubhub_status } = restaurant.value;
     if (platform === 'doordash' && doordash_status === 0) {
-      submitForm(ruleFormRef.value, {
+      await submitForm(ruleFormRef.value, {
         ...ruleForm,
-        doordash_status: 2,
       });
     } else if (platform === 'ubereats' && ubereats_status === 0) {
       if (restaurantId) {
-        await updateRestaurant({ ubereats_status: 2, restaurant_id: Number(restaurantId) });
+        await updateRestaurant({ ubereats_binding: 1, restaurant_id: Number(restaurantId) });
       }
     } else if (platform === 'grubhub' && grubhub_status === 0) {
       if (restaurantId) {
-        await updateRestaurant({ grubhub_status: 2, restaurant_id: Number(restaurantId) });
+        await updateRestaurant({ grubhub_binding: 1, restaurant_id: Number(restaurantId) });
       }
     }
     restaurant.value = await getRestaurantDetail({ restaurant_id: Number(restaurantId) });

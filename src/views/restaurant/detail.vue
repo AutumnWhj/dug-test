@@ -67,6 +67,7 @@
   import { compressAndDownload, downloadFile } from '/@/utils/download';
   import { ElMessage } from 'element-plus';
   import router from '/@/router';
+  import { useUserStore } from '/@/store';
   const report: any = ref([]);
   const restaurants: any = ref([]);
   const checkList: any = ref([]);
@@ -75,8 +76,10 @@
   const pageCount = ref(0);
   const { restaurantId } = route.query;
   console.log('restaurantId: ', restaurantId);
+  const userStore = useUserStore();
+  const { user_id } = userStore;
   const defaultParams = reactive({
-    user_id: 1,
+    user_id,
     restaurant_id: Number(restaurantId),
     page_num: 1,
   });
@@ -93,7 +96,7 @@
   };
   onBeforeMount(async () => {
     await getReports(defaultParams);
-    restaurants.value = await getRestaurants({ user_id: 1 });
+    restaurants.value = await getRestaurants({ user_id });
   });
   const currentRestaurant = computed(() => {
     return restaurants.value.find((item) => item.id === Number(restaurantId));

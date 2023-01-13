@@ -63,11 +63,14 @@
   import plusImage from '/@/assets/images/plus.png';
   import { createRestaurant, updateRestaurant, getRestaurantDetail } from '/@/api/user/index';
   import { useRoute, useRouter } from 'vue-router';
+  import { useUserStore } from '/@/store/index';
   const route = useRoute();
   const router = useRouter();
   const { restaurantId } = route.query;
   console.log('restaurantId-----: ', restaurantId);
   const restaurantInfo: any = ref({});
+  const userStore = useUserStore();
+  const { user_id } = userStore;
 
   const ruleFormRef = ref<FormInstance>();
   let ruleForm = reactive({
@@ -143,7 +146,7 @@
         } else {
           const params = {
             ...ruleForm,
-            user_id: 1,
+            user_id,
           };
           console.log('params: ', params);
           await createRestaurant(params);

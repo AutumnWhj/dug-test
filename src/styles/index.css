@@ -22,6 +22,12 @@ body {
   box-shadow: 0px 1px 14px 0px rgba(4, 3, 73, 0.3);
 }
 
+.main-bg {
+  background: url('/@/assets/images/star.png') no-repeat;
+  background-size: 166% auto;
+  background-position: top;
+}
+
 .el-textarea__inner,
 .el-input {
   --el-input-border-radius: 1rem !important;
