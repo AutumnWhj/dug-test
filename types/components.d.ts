@@ -31,7 +31,6 @@ declare module '@vue/runtime-core' {
     Feedback: typeof import('./../src/components/Dialog/Feedback.vue')['default']
     Footer: typeof import('./../src/components/Footer/index.vue')['default']
     Header: typeof import('./../src/components/Header/index.vue')['default']
-    Login: typeof import('./../src/components/Dialog/Login.vue')['default']
     PasswordStrength: typeof import('./../src/components/PasswordStrength/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

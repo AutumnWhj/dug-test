@@ -88,7 +88,8 @@
             </div>
           </div>
         </div>
-        <el-button plain class="w-2/3 self-center !rounded-3xl" size="large" color="#2C72FE" @click="toAddRestaurant"> 添加餐厅 </el-button>
+        <el-button plain class="w-2/3 self-center !rounded-3xl" size="large" color="#2C72FE" @click="toAddRestaurant"> 添加完成 </el-button>
+        <div class="text-#8F92A1 text-sm mt-5 text-center">如需验证，我们有专人联系您来通过验证</div>
       </div>
     </div>
   </div>
