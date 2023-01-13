@@ -139,6 +139,7 @@
         if (restaurantId) {
           await updateRestaurant({ ...ruleForm, restaurant_id: Number(restaurantId) });
           ElMessage.success('修改成功');
+          router.push('/restaurant');
         } else {
           const params = {
             ...ruleForm,
@@ -147,8 +148,8 @@
           console.log('params: ', params);
           await createRestaurant(params);
           ElMessage.success('新建成功');
+          router.push(`/agreement?id=${restaurantId}`);
         }
-        router.push('/restaurant');
       } else {
         console.log('error submit!', fields);
       }

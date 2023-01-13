@@ -24,8 +24,8 @@
           </div>
         </el-scrollbar>
       </div>
-      <el-button class="w-2/3 self-center !rounded-3xl mb-8" size="large" color="#2C72FE" @click="toRestaurant">
-        请滚动阅读条款 （{{ time }}s）
+      <el-button class="w-2/3 self-center !rounded-3xl mb-8" size="large" :color="buttonStyle.color" @click="toRestaurant">
+        {{ buttonStyle.message }}
       </el-button>
     </div>
   </div>
@@ -33,20 +33,25 @@
 </template>
 
 <script lang="ts" setup>
-  import { useRouter } from 'vue-router';
+  import { useRouter, useRoute } from 'vue-router';
   import LeaveMessage from '../components/LeaveMessage.vue';
   import logoTextImage from '/@/assets/images/logo_text.png';
 
   const router = useRouter();
+  const route = useRoute();
+  const { id: restaurantId } = route.query;
   const toRestaurant = () => {
-    router.push('/restaurant/edit');
+    if (restaurantId) {
+      if (isScrollBottom.value && time.value === 0) {
+        router.push(`/bind?id=${restaurantId}`);
+      }
+    }
   };
   const scrollbar = ref();
   const isScrollBottom = ref(false);
   const handleScroll = () => {
     const { wrapRef } = scrollbar.value;
     isScrollBottom.value = wrapRef.scrollHeight - (wrapRef.scrollTop + wrapRef.clientHeight + 1) <= 1;
-    console.log('isScrollBottom: ', isScrollBottom.value);
   };
   const time = ref(14);
   let timer: any = ref(null);
@@ -58,5 +63,25 @@
         clearInterval(timer.value);
       }
     }, 1000);
+  });
+  const buttonStyle = computed(() => {
+    if (time.value > 0) {
+      return {
+        color: '#A6A6A6',
+        message: `请滚动阅读条款 （ ${time.value} s）`,
+      };
+    } else {
+      if (!isScrollBottom.value) {
+        return {
+          color: '#A6A6A6',
+          message: `请滑动到底`,
+        };
+      } else {
+        return {
+          color: '#2C72FE',
+          message: `已阅读`,
+        };
+      }
+    }
   });
 </script>

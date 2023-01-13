@@ -66,33 +66,3 @@
     router.push(`/restaurant/edit?restaurantId=${restaurantId}`);
   };
 </script>
-<style scoped>
-  .avatar-uploader .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-</style>
-
-<style>
-  .avatar-uploader .el-upload {
-    border-radius: 16px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: var(--el-transition-duration-fast);
-    background: #f9f9fa;
-  }
-
-  .avatar-uploader .el-upload:hover {
-    border-color: var(--el-color-primary);
-  }
-
-  .el-icon.avatar-uploader-icon {
-    font-size: 40px;
-    color: #e6e6e6;
-    width: 145px;
-    height: 145px;
-    text-align: center;
-  }
-</style>
