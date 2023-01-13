@@ -33,6 +33,7 @@
   import type { FormInstance, FormRules } from 'element-plus';
   import logoTextImage from '/@/assets/images/logo_text.png';
   import { useUserStore } from '/@/store';
+  import { isLogin } from '/@/utils/auth';
   const userStore = useUserStore();
   const ruleFormRef = ref<FormInstance>();
   let ruleForm = reactive({
@@ -52,7 +53,12 @@
       if (valid) {
         console.log('submit!11111', ruleForm);
         await userStore.login(ruleForm);
-        ElMessage.success('登录成功');
+        if (isLogin()) {
+          ElMessage.success('登录成功');
+        } else {
+          ElMessage.error(' 用户名或密码不正确');
+          return;
+        }
         router.push('/restaurant');
       } else {
         console.log('error submit!', fields);

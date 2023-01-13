@@ -13,6 +13,8 @@ enum URL {
   updateRestaurant = '/api/user/restaurant/update',
   restaurantDetail = '/api/user/restaurant/detail',
   leaveMessage = '/api/user/message',
+  verifyEmail = '/api/user/verify',
+  'resetPassword' = '/api/user/reset',
 }
 interface LoginRes {
   token: string;
@@ -46,6 +48,10 @@ const getRestaurantDetail = async (data: any) => post<any>({ url: URL.restaurant
 
 const leaveMessage = async (data: any) => post<any>({ url: URL.leaveMessage, data });
 
+const verifyEmail = async (data: any) => post<any>({ url: URL.verifyEmail, data });
+
+const resetPassword = async (data: any) => post<any>({ url: URL.resetPassword, data });
+
 export {
   getUserProfile,
   logout,
@@ -57,4 +63,6 @@ export {
   updateRestaurant,
   getRestaurantDetail,
   leaveMessage,
+  verifyEmail,
+  resetPassword,
 };

@@ -20,6 +20,7 @@ export const useUserStore = defineStore('user', {
     // 重置用户信息
     resetInfo() {
       this.$reset();
+      clearToken();
     },
     // 获取用户信息
     async info() {

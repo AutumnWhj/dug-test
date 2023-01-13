@@ -49,7 +49,7 @@
         </el-form-item>
       </el-form>
       <el-button class="w-2/3 self-center !rounded-3xl mt-4" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
-        {{ restaurantId ? '修改餐厅' : '添加餐厅' }}
+        {{ restaurantId ? '修改' : '添加餐厅' }}
       </el-button>
     </div>
   </div>
