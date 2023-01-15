@@ -149,9 +149,9 @@
             user_id,
           };
           console.log('params: ', params);
-          await createRestaurant(params);
+          const id = await createRestaurant(params);
           ElMessage.success('新建成功');
-          router.push(`/agreement?id=${restaurantId}`);
+          router.push(`/agreement?id=${id}`);
         }
       } else {
         console.log('error submit!', fields);

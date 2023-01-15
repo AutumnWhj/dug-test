@@ -102,7 +102,7 @@
   import { FormInstance, FormRules } from 'element-plus';
   import { updateRestaurant, getRestaurantDetail } from '/@/api/user/index';
   import { useRouter, useRoute } from 'vue-router';
-  import DoorDashImage from '/@/assets/images/DoorDash.png';
+  import DoorDashImage from '/@/assets/images/DoorDash1.png';
   import UberEatsImage from '/@/assets/images/UberEats.png';
   import GrubHubImage from '/@/assets/images/GrubHub.png';
   const router = useRouter();
