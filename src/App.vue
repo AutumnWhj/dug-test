@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <router-view class="main-bg" />
+  <router-view class="main-bg min-h-screen" />
 </template>
 <script setup lang="ts">
   import Header from '/@/components/Header/index.vue';
