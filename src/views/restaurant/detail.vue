@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-col items-center relative mt-12 mb-20">
     <div class="w-3/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
-      <div class="flex items-center self-center">
-        <div class="flex items-center flex-col mb-6">
-          <el-image class="h-20 mr-3 mb-2" :src="currentRestaurant?.image" />
-          <div class="text-black font-medium text-sm">{{ currentRestaurant?.name }}</div>
+      <div class="flex flex-col items-center">
+        <div class="flex items-center self-center">
+          <el-image v-if="hasPre" class="h-7 mr-5 cursor-pointer rotate-180" :src="arrowRightImage" @click="handleSwitchPage('pre')" />
+          <el-image class="h-24 rounded-md" :src="currentRestaurant?.image" />
+          <el-image v-if="hasNext" class="h-7 ml-5 cursor-pointer" :src="arrowRightImage" @click="handleSwitchPage('next')" />
         </div>
-        <el-image v-if="hasNext" class="h-4 ml-4 cursor-pointer" :src="arrowRightImage" @click="handleNextPage" />
+        <div class="text-black font-medium text-sm mt-2 mb-6">{{ currentRestaurant?.name }}</div>
       </div>
-
       <el-empty v-if="report.length === 0" description="暂未生成报告" />
       <el-checkbox-group v-model="checkList" @change="handleCheckChange">
         <div v-for="item in report" :key="item.id" class="report-list mb-4 bg-gray-800 p-5 rounded-2xl">
@@ -105,6 +105,10 @@
     const index = (restaurants.value || []).findIndex((item) => item.id === Number(restaurantId));
     return !!restaurants.value[index + 1];
   });
+  const hasPre = computed(() => {
+    const index = (restaurants.value || []).findIndex((item) => item.id === Number(restaurantId));
+    return !!restaurants.value[index - 1];
+  });
 
   watch(
     () => restaurantId,
@@ -151,16 +155,16 @@
           }
         })
         .filter(Boolean);
-      compressAndDownload(list);
+      compressAndDownload(list, '报告');
     } else {
       downloadFile(filepath, filename);
     }
   };
-  const handleNextPage = () => {
+  const handleSwitchPage = (type) => {
     const index = restaurants.value.findIndex((item) => item.id === Number(restaurantId));
-    const { id: nextId } = restaurants.value[index + 1];
-    if (nextId) {
-      router.replace(`/restaurant/detail?restaurantId=${nextId}`);
+    const { id } = type === 'next' ? restaurants.value[index + 1] : restaurants.value[index - 1];
+    if (id) {
+      router.replace(`/restaurant/detail?restaurantId=${id}`);
       setTimeout(() => location.reload(), 100);
     }
   };

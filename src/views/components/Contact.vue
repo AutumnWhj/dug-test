@@ -13,7 +13,7 @@
       </div>
     </div>
     <ContactForm />
-    <el-image class="h-md !absolute right-[-140px] bottom-[-160px]" :src="twoImage" />
+    <el-image class="h-md !absolute right-[-140px] bottom-[-160px] !hidden md:block" :src="twoImage" />
   </div>
 </template>
 <script lang="ts" setup>

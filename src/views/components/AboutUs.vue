@@ -10,12 +10,12 @@
       <div>Why choose us Why choose us</div>
       <div>Why choose us Why choose us Why choose us Why choose us Why choose us </div>
     </div>
-    <div class="mt-20 justify-between grid grid-cols-1 md:grid-cols-3 gap-10">
+    <div class="mt-20 justify-between grid grid-cols-1 md:grid-cols-3 justify-items-stretch gap-10 2xl:gap-16">
       <div
         v-for="index in 3"
         :key="index"
         :class="{ 'text-center': index !== 1 && hoverIndex === index }"
-        class="py-16 px-16 md:w-96 relative h-[29.375rem] border border-gray-200 rounded text-gray-700 hover:!text-white hover:bg-primary hover:scale-y-105 hover:translate-y-3 cursor-pointer"
+        class="py-16 px-16 relative h-[29.375rem] border border-gray-200 rounded text-gray-700 hover:!text-white hover:bg-primary hover:scale-y-105 hover:translate-y-3 cursor-pointer"
         @mouseenter="
           isHover = 'hover';
           hoverIndex = index;

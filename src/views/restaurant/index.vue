@@ -10,7 +10,7 @@
         <div v-for="item in restaurants" :key="item.id" class="mb-4 bg-gray-800 px-12 rounded-2xl">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
-              <el-image class="h-20 w-20 mr-3" :src="item.image">
+              <el-image class="h-20 w-20 mr-3 rounded-md" :src="item.image">
                 <template #error>
                   <div class="w-full h-full flex items-center justify-center">
                     <el-icon><icon-picture /></el-icon>

@@ -32,11 +32,10 @@
           <div class="w-full flex items-center">
             <el-upload
               class="avatar-uploader"
-              action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
               :show-file-list="false"
               accept="image/png, image/jpeg"
-              :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
+              :http-request="httpRequest"
             >
               <el-image v-if="ruleForm.image" :src="ruleForm.image" class="avatar" />
               <!-- <el-icon v-else ><Plus /></el-icon> -->
@@ -64,6 +63,7 @@
   import { createRestaurant, updateRestaurant, getRestaurantDetail } from '/@/api/user/index';
   import { useRoute, useRouter } from 'vue-router';
   import { useUserStore } from '/@/store/index';
+  import { uploadFile } from '/@/utils/upload';
   const route = useRoute();
   const router = useRouter();
   const { restaurantId } = route.query;
@@ -78,8 +78,7 @@
     address: '',
     phone_number: '',
     kind: '',
-    image:
-      'https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ed8c2069849744f299b6c551600ac310~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp?',
+    image: '',
   });
 
   onBeforeMount(async () => {
@@ -117,10 +116,10 @@
       label: '每七天一次',
     },
   ];
-
-  const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
-    console.log('uploadFile111: ', uploadFile, response);
-    ruleForm.image = URL.createObjectURL(uploadFile.raw!);
+  const httpRequest = async (params) => {
+    const { file } = params;
+    const url = await uploadFile(file);
+    ruleForm.image = `https://${url}`;
   };
 
   const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
