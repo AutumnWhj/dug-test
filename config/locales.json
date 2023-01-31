@@ -1,0 +1,14 @@
+{
+  "en": {
+    "message": {
+      "lang": "English(USA)",
+      "hello": "hello world"
+    }
+  },
+  "zh": {
+    "message": {
+      "lang": "中文",
+      "hello": "你好，世界"
+    }
+  }
+}

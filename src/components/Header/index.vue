@@ -10,17 +10,17 @@
       <a class="mr-20 text-gray-500 cursor-pointer" :class="{ active: route.hash === '#home' }" href="#home" @click="handleHome">Home</a>
       <a v-if="isHomePath" class="mr-20 text-gray-500" :class="{ active: route.hash === '#about' }" href="#about">About Us</a>
       <a v-if="isHomePath" class="mr-9 text-gray-500" :class="{ active: route.hash === '#contact' }" href="#contact">Contact</a>
-      <el-dropdown trigger="click">
+      <el-dropdown trigger="click" @command="handleCommand">
         <div class="bg-white rounded-2xl flex items-center justify-center card-shadow cursor-pointer">
-          <span class="px-4 py-2 text-sm font-bold text-gray-500">
-            English (USA)
+          <span class="w-36 px-4 py-2 text-sm font-bold text-gray-500 flex justify-between items-center">
+            {{ lang }}
             <SvgIcon name="svg-arrow" class="text-xs ml-1" />
           </span>
         </div>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item><div class="px-4">中文</div></el-dropdown-item>
-            <el-dropdown-item><div class="px-4">English</div></el-dropdown-item>
+            <el-dropdown-item command="zh"><div class="px-4">中文</div></el-dropdown-item>
+            <el-dropdown-item command="en"><div class="px-4">English</div></el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -32,6 +32,8 @@
   import SvgIcon from '/@/components/SvgIcon/index.vue';
   import { useRoute, useRouter } from 'vue-router';
   import { isLogin } from '/@/utils/auth';
+  import { useI18n } from 'vue-i18n';
+  const { locale, t } = useI18n();
   const route = useRoute();
   const router = useRouter();
   console.log('route11111: ', route.path);
@@ -49,6 +51,13 @@
       window.scrollTo(0, 0);
       router.push('/');
     }
+  };
+  const lang = computed(() => {
+    return t('message.lang');
+  });
+  const handleCommand = (value) => {
+    locale.value = value;
+    localStorage.setItem('lang', value);
   };
 </script>
 <style lang="less" scoped>
