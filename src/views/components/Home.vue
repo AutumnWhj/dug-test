@@ -6,7 +6,7 @@
     </div>
     <div class="w-full md:w-[580px] h-96 bg-black mt-11">
       <iframe
-        src="//player.bilibili.com/player.html?aid=92105699&bvid=BV1X7411P7kE&cid=157270764&page=1"
+        src="https://data-1256210609.cos.ap-guangzhou.myqcloud.com/4363_1675309340.mp4"
         scrolling="no"
         border="0"
         frameborder="no"
