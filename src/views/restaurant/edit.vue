@@ -100,7 +100,7 @@
     address: [{ required: true, message: '请输入餐厅地址', trigger: 'blur' }],
     phone_number: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
     kind: [{ required: true, message: '请选择获取Summary order时间', trigger: 'blur' }],
-    image: [{ required: true, message: '请添加餐厅LOGO', trigger: 'blur' }],
+    // image: [{ required: true, message: '请添加餐厅LOGO', trigger: 'blur' }],
   });
   const options = [
     {

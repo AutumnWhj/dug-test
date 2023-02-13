@@ -8,7 +8,7 @@
         </div>
         <el-empty v-if="restaurants.length === 0" description="暂无数据" />
         <div v-for="item in restaurants" :key="item.id" class="mb-4 bg-gray-800 px-12 rounded-2xl">
-          <div class="flex justify-between items-center">
+          <div v-if="item.status === 1" class="flex justify-between items-center h-28">
             <div class="flex items-center">
               <el-image class="h-20 w-20 mr-3 rounded-md" :src="item.image">
                 <template #error>
@@ -33,8 +33,19 @@
               </el-button>
             </div>
           </div>
+          <div v-if="item.status === 0" class="flex flex-col justify-center items-center h-28 font-medium">
+            <div class="text-primary mb-1">{{ item.name }}...</div>
+            <div>{{ item.address }}</div>
+          </div>
         </div>
-        <el-button plain class="w-2/3 self-center !rounded-3xl mt-9 mb-8" size="large" color="#2C72FE" @click="toAddRestaurant">
+        <el-button
+          :disabled="canNotAdd"
+          plain
+          class="w-2/3 self-center !rounded-3xl mt-9 mb-8"
+          size="large"
+          color="#2C72FE"
+          @click="toAddRestaurant"
+        >
           添加餐厅
         </el-button>
       </div>
@@ -57,6 +68,9 @@
     const data = await getRestaurants({ user_id });
     console.log('data----: ', data);
     restaurants.value = data;
+  });
+  const canNotAdd = computed(() => {
+    return restaurants.value.some(({ status }) => status === 0);
   });
 
   const handleReport = (data) => {

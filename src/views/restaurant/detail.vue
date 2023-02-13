@@ -10,7 +10,23 @@
         <div class="text-black font-medium text-sm mt-2 mb-6">{{ currentRestaurant?.name }}</div>
       </div>
       <el-empty v-if="report.length === 0" description="暂未生成报告" />
-      <el-checkbox-group v-model="checkList" @change="handleCheckChange">
+      <div class="filter-box mb-4 flex justify-between items-center">
+        <el-select v-model="selectTime" class="w-32" placeholder="Select" @change="handleSelectChange">
+          <el-option v-for="item in timeOptions" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
+
+        <div v-if="report.length" class="flex justify-end items-center">
+          <el-checkbox v-model="allCheck" label="全选" @change="handleCheckAll" />
+          <div
+            class="ml-4 button-shadow bg-white px-5 py-2 flex items-center justify-center rounded-2xl gap-3 cursor-pointer"
+            @click="handleDownload({ type: 'all' })"
+          >
+            <span class="text-gray-300 font-bold text-sm">批量下载</span>
+            <SvgIcon name="svg-download" class="text-base text-gray-300 font-bold" />
+          </div>
+        </div>
+      </div>
+      <el-checkbox-group v-model="checkList" v-loading="loading">
         <div v-for="item in report" :key="item.id" class="report-list mb-4 bg-gray-800 p-5 rounded-2xl">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
@@ -36,16 +52,7 @@
           </div>
         </div>
       </el-checkbox-group>
-      <div v-if="report.length" class="flex justify-end items-center">
-        <el-checkbox v-model="allCheck" label="全选" @change="handleCheckAll" />
-        <div
-          class="ml-4 button-shadow bg-white px-5 py-2 flex items-center justify-center rounded-2xl gap-3 cursor-pointer"
-          @click="handleDownload({ type: 'all' })"
-        >
-          <span class="text-gray-300 font-bold text-sm">批量下载</span>
-          <SvgIcon name="svg-download" class="text-base text-gray-300 font-bold" />
-        </div>
-      </div>
+
       <el-pagination
         v-if="report.length"
         class="flex justify-center mt-5"
@@ -75,21 +82,39 @@
   const route = useRoute();
   const pageCount = ref(0);
   const { restaurantId } = route.query;
-  console.log('restaurantId: ', restaurantId);
   const userStore = useUserStore();
   const { user_id } = userStore;
+  const selectTime = ref(7);
+  const loading = ref(false);
   const defaultParams = reactive({
     user_id,
     restaurant_id: Number(restaurantId),
     page_num: 1,
+    page_size: selectTime.value,
   });
 
+  const timeOptions = [
+    {
+      label: '最近7天',
+      value: 7,
+    },
+    {
+      label: '最近14天',
+      value: 14,
+    },
+    {
+      label: '最近30天',
+      value: 30,
+    },
+  ];
+
   const getReports = async (params) => {
+    loading.value = true;
     allCheck.value = false;
     checkList.value = [];
     const { list, page } = await getRestaurantReport(params);
-    console.log('report---data----: ', list);
     report.value = list;
+    loading.value = false;
     if (!pageCount.value) {
       pageCount.value = page;
     }
@@ -112,20 +137,22 @@
 
   watch(
     () => restaurantId,
-    (value) => {
-      console.log('value: ', value);
+    () => {
       getReports(defaultParams);
     },
   );
 
-  const handleCheckChange = (value) => {
-    console.log('handleCheckChange---value: ', value);
-    // console.log('checkList: ', checkList);
+  const handleSelectChange = (value) => {
+    getReports({
+      ...defaultParams,
+      page_size: value,
+    });
   };
   const handleCheckAll = (value) => {
-    console.log('handleCheckAll: ', value);
     if (value) {
       checkList.value = report.value.map(({ id }) => id);
+    } else {
+      checkList.value = [];
     }
   };
   const handleCurrentChange = (value) => {
@@ -173,6 +200,16 @@
   .report-list {
     :deep(.el-checkbox__label) {
       display: none;
+    }
+  }
+  .filter-box {
+    :deep(.el-input__wrapper) {
+      border-radius: 16px;
+      box-shadow: 0px 1px 14px 0px rgba(191, 191, 217, 0.3);
+      background: #fff !important;
+    }
+    .button-shadow {
+      box-shadow: 0px 1px 14px 0px rgba(191, 191, 217, 0.3);
     }
   }
 </style>
