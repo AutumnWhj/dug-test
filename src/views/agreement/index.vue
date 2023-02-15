@@ -39,12 +39,10 @@
 
   const router = useRouter();
   const route = useRoute();
-  const { id: restaurantId } = route.query;
+  const { id = '' } = route.query || '';
   const toRestaurant = () => {
-    if (restaurantId) {
-      if (isScrollBottom.value && time.value === 0) {
-        router.push(`/bind?id=${restaurantId}`);
-      }
+    if (isScrollBottom.value && time.value === 0) {
+      router.push(`/bind?id=${id}`);
     }
   };
   const scrollbar = ref();

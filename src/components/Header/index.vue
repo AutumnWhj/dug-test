@@ -6,13 +6,15 @@
         DUG Solutions
       </router-link>
     </div>
-    <div class="hidden md:flex text-2xl font-bold">
+    <div class="hidden md:flex text-2xl font-bold items-center">
       <a class="mr-20 text-gray-500 cursor-pointer" :class="{ active: route.hash === '#home' }" @click="handleHome">Home</a>
       <a v-if="isHomePath" class="mr-20 text-gray-500" :class="{ active: route.hash === '#about' }" href="#about">About Us</a>
       <a v-if="isHomePath" class="mr-9 text-gray-500" :class="{ active: route.hash === '#contact' }" href="#contact">Contact</a>
-      <el-button v-if="isHomePath" class="!rounded-2xl mr-9 w-32" color="#2C72FE" @click="toLogin"> Login </el-button>
+      <el-button v-if="isHomePath" class="!rounded-2xl mr-9 w-32 !font-bold" size="large" color="#2C72FE" @click="toLogin">
+        Login
+      </el-button>
       <el-dropdown trigger="click" @command="handleCommand">
-        <div class="bg-white rounded-2xl flex items-center justify-center card-shadow cursor-pointer">
+        <div class="h-[40px] bg-white rounded-2xl flex items-center justify-center card-shadow cursor-pointer">
           <span class="w-36 px-4 py-2 text-sm font-bold text-gray-500 flex justify-between items-center">
             {{ lang }}
             <SvgIcon name="svg-arrow" class="text-xs ml-1" />

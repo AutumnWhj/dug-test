@@ -3,7 +3,7 @@
     <div class="w-1/2 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="w-full flex flex-col">
         <div class="text-center mb-8">
-          <div class="text-gray-300 text-xl mb-3">完善绑定外卖平台</div>
+          <div class="text-gray-300 text-xl mb-3">{{ restaurantId ? '首次绑定外卖平台' : '完善绑定外卖平台' }} </div>
           <div class="text-gray-300/50 text-sm">将您使用的其他外卖平台进行绑定</div>
         </div>
         <div :key="'doordash'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl">
@@ -129,14 +129,16 @@
 <script lang="ts" setup>
   import LeaveMessage from '../components/LeaveMessage.vue';
   import { Picture as IconPicture } from '@element-plus/icons-vue';
-  import { FormInstance } from 'element-plus';
-  import { updateRestaurant, getRestaurantDetail } from '/@/api/user/index';
+  import { ElMessage, FormInstance } from 'element-plus';
+  import { createRestaurant, updateRestaurant, getRestaurantDetail } from '/@/api/user/index';
   import { useRouter, useRoute } from 'vue-router';
+  import { useUserStore } from '/@/store';
   import DoorDashImage from '/@/assets/images/DoorDash1.png';
   import UberEatsImage from '/@/assets/images/UberEats.png';
   import GrubHubImage from '/@/assets/images/GrubHub.png';
   const router = useRouter();
   const route = useRoute();
+  const userStore = useUserStore();
   const { id: restaurantId } = route.query;
 
   let ruleForm = reactive({
@@ -187,7 +189,6 @@
     router.push('/restaurant');
   };
   const handlePlatform = async (platform) => {
-    console.log('platform:az ', platform, doordashRef.value);
     const { doordash_status, ubereats_status, grubhub_status } = restaurant.value;
     const {
       doordash_username = '',
@@ -221,9 +222,18 @@
     if (!formEl) return;
     await formEl.validate(async (valid, fields) => {
       if (valid) {
-        if (restaurantId) {
+        if (Number(restaurantId)) {
           await updateRestaurant({ ...data, restaurant_id: Number(restaurantId) });
           restaurant.value = await getRestaurantDetail({ restaurant_id: Number(restaurantId) });
+        } else {
+          const { user_id } = userStore;
+          const message = await createRestaurant({
+            ...data,
+            user_id,
+          });
+          if (typeof message === 'string') {
+            ElMessage.warning(message);
+          }
         }
       } else {
         console.log('error submit!', fields);

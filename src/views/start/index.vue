@@ -23,6 +23,6 @@
 
   const router = useRouter();
   const toRestaurant = () => {
-    router.push('/restaurant/edit');
+    router.push('/agreement');
   };
 </script>

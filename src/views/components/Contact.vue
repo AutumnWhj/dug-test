@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center flex-col md:flex-row justify-between gap-20 w-full relative">
+  <div class="flex items-center flex-col md:flex-row justify-between 2xl:justify-around gap-20 w-full relative">
     <div class="text-center md:text-left">
       <div class="text-primary text-2xl font-bold">Contact</div>
       <div class="text-gray-700 font-bold text-6xl mt-4 mb-10 leading-snug">
