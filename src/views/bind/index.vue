@@ -3,120 +3,128 @@
     <div class="w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="w-full flex flex-col">
         <div class="text-center mb-8">
-          <div class="text-gray-300 text-xl mb-3">{{ restaurantId ? '首次绑定外卖平台' : '完善绑定外卖平台' }} </div>
+          <div class="text-gray-300 text-xl mb-3">{{ !restaurantId ? '首次绑定外卖平台' : '完善绑定外卖平台' }} </div>
           <div class="text-gray-300/50 text-sm">将您使用的其他外卖平台进行绑定</div>
         </div>
-        <div :key="'doordash'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl">
-          <div class="flex flex-col justify-between">
-            <div class="flex justify-between items-center">
-              <el-image class="h-12 mr-3" :src="DoorDashImage">
-                <template #error>
-                  <div class="w-full h-full flex items-center justify-center">
-                    <el-icon><icon-picture /></el-icon>
-                  </div>
-                </template>
-              </el-image>
-              <el-button
-                class="!min-w-28 self-center !rounded-3xl"
-                color="#2C72FE"
+        <el-radio-group v-model="radioPlatform">
+          <div :key="'doordash'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl w-full" @click="radioPlatform = 'doordash'">
+            <div class="flex flex-col justify-between">
+              <div class="flex justify-between items-center">
+                <el-image class="h-12 mr-3" :src="DoorDashImage">
+                  <template #error>
+                    <div class="w-full h-full flex items-center justify-center">
+                      <el-icon><icon-picture /></el-icon>
+                    </div>
+                  </template>
+                </el-image>
+                <el-button
+                  v-if="restaurantId"
+                  class="!min-w-28 self-center !rounded-3xl"
+                  color="#2C72FE"
+                  size="large"
+                  :type="getButtonStyle('doordash')?.type"
+                  @click="handlePlatform('doordash')"
+                >
+                  {{ getButtonStyle('doordash')?.text }}
+                </el-button>
+                <el-radio v-else label="doordash" />
+              </div>
+              <el-form
+                v-show="checkShowForm('doordash')"
+                class="w-full mt-7"
+                ref="doordashRef"
+                :model="ruleForm"
+                :rules="platformsRules[0]"
                 size="large"
-                :type="getButtonStyle('doordash')?.type"
-                @click="handlePlatform('doordash')"
               >
-                {{ getButtonStyle('doordash')?.text }}
-              </el-button>
+                <el-form-item prop="doordash_username">
+                  <el-input v-model="ruleForm[`${'doordash'}_username`]" :placeholder="`DoorDash账号`" size="large" />
+                </el-form-item>
+                <el-form-item prop="doordash_password">
+                  <el-input type="doordash_password" v-model="ruleForm[`${'doordash'}_password`]" :placeholder="`DoorDash密码`" />
+                </el-form-item>
+              </el-form>
             </div>
-            <el-form
-              v-if="restaurant?.doordash_status === 0 || restaurant.doordash_status === 3"
-              class="w-full mt-7"
-              :ref="`doordashRef`"
-              :model="ruleForm"
-              :rules="platformsRules[0]"
-              size="large"
-            >
-              <el-form-item prop="doordash_username">
-                <el-input v-model="ruleForm[`${'doordash'}_username`]" :placeholder="`DoorDash账号`" size="large" />
-              </el-form-item>
-              <el-form-item prop="doordash_password">
-                <el-input type="doordash_password" v-model="ruleForm[`${'doordash'}_password`]" :placeholder="`DoorDash密码`" />
-              </el-form-item>
-            </el-form>
           </div>
-        </div>
-        <div :key="'ubereats'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl">
-          <div class="flex flex-col justify-between">
-            <div class="flex justify-between items-center">
-              <el-image class="h-12 mr-3" :src="UberEatsImage">
-                <template #error>
-                  <div class="w-full h-full flex items-center justify-center">
-                    <el-icon><icon-picture /></el-icon>
-                  </div>
-                </template>
-              </el-image>
-              <el-button
-                class="!min-w-28 self-center !rounded-3xl"
-                color="#2C72FE"
+          <div :key="'ubereats'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl w-full" @click="radioPlatform = 'ubereats'">
+            <div class="flex flex-col justify-between">
+              <div class="flex justify-between items-center">
+                <el-image class="h-12 mr-3" :src="UberEatsImage">
+                  <template #error>
+                    <div class="w-full h-full flex items-center justify-center">
+                      <el-icon><icon-picture /></el-icon>
+                    </div>
+                  </template>
+                </el-image>
+                <el-button
+                  v-if="restaurantId"
+                  class="!min-w-28 self-center !rounded-3xl"
+                  color="#2C72FE"
+                  size="large"
+                  :type="getButtonStyle('ubereats')?.type"
+                  @click="handlePlatform('ubereats')"
+                >
+                  {{ getButtonStyle('ubereats')?.text }}
+                </el-button>
+                <el-radio v-else label="ubereats" />
+              </div>
+              <el-form
+                v-show="checkShowForm('ubereats')"
+                class="w-full mt-7"
+                ref="ubereatsRef"
+                :model="ruleForm"
+                :rules="platformsRules[1]"
                 size="large"
-                :type="getButtonStyle('ubereats')?.type"
-                @click="handlePlatform('ubereats')"
               >
-                {{ getButtonStyle('ubereats')?.text }}
-              </el-button>
+                <el-form-item prop="ubereats_username">
+                  <el-input v-model="ruleForm[`${'ubereats'}_username`]" :placeholder="`UberEats账号`" size="large" />
+                </el-form-item>
+                <el-form-item prop="ubereats_password">
+                  <el-input type="ubereats_password" v-model="ruleForm[`${'ubereats'}_password`]" :placeholder="`UberEats密码`" />
+                </el-form-item>
+              </el-form>
             </div>
-            <el-form
-              v-if="restaurant?.ubereats_status === 0 || restaurant.ubereats_status === 3"
-              class="w-full mt-7"
-              :ref="`ubereatsRef`"
-              :model="ruleForm"
-              :rules="platformsRules[1]"
-              size="large"
-            >
-              <el-form-item prop="ubereats_username">
-                <el-input v-model="ruleForm[`${'ubereats'}_username`]" :placeholder="`UberEats账号`" size="large" />
-              </el-form-item>
-              <el-form-item prop="ubereats_password">
-                <el-input type="ubereats_password" v-model="ruleForm[`${'ubereats'}_password`]" :placeholder="`UberEats密码`" />
-              </el-form-item>
-            </el-form>
           </div>
-        </div>
-        <div :key="'grubhub'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl">
-          <div class="flex flex-col justify-between">
-            <div class="flex justify-between items-center">
-              <el-image class="h-12 mr-3" :src="GrubHubImage">
-                <template #error>
-                  <div class="w-full h-full flex items-center justify-center">
-                    <el-icon><icon-picture /></el-icon>
-                  </div>
-                </template>
-              </el-image>
-              <el-button
-                class="!min-w-28 self-center !rounded-3xl"
-                color="#2C72FE"
+          <div :key="'grubhub'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl w-full" @click="radioPlatform = 'grubhub'">
+            <div class="flex flex-col justify-between">
+              <div class="flex justify-between items-center">
+                <el-image class="h-12 mr-3" :src="GrubHubImage">
+                  <template #error>
+                    <div class="w-full h-full flex items-center justify-center">
+                      <el-icon><icon-picture /></el-icon>
+                    </div>
+                  </template>
+                </el-image>
+                <el-button
+                  v-if="restaurantId"
+                  class="!min-w-28 self-center !rounded-3xl"
+                  color="#2C72FE"
+                  size="large"
+                  :plain="getButtonStyle('grubhub')?.type === 'plain'"
+                  @click="handlePlatform('grubhub')"
+                >
+                  {{ getButtonStyle('grubhub')?.text }}
+                </el-button>
+                <el-radio v-else label="grubhub" />
+              </div>
+              <el-form
+                v-show="checkShowForm('grubhub')"
+                class="w-full mt-7"
+                :ref="`grubhubRef`"
+                :model="ruleForm"
+                :rules="platformsRules[2]"
                 size="large"
-                :plain="getButtonStyle('grubhub')?.type === 'plain'"
-                @click="handlePlatform('grubhub')"
               >
-                {{ getButtonStyle('grubhub')?.text }}
-              </el-button>
+                <el-form-item prop="grubhub_username">
+                  <el-input v-model="ruleForm[`${'grubhub'}_username`]" :placeholder="`GrubHub账号`" size="large" />
+                </el-form-item>
+                <el-form-item prop="grubhub_password">
+                  <el-input type="grubhub_password" v-model="ruleForm[`${'grubhub'}_password`]" :placeholder="`GrubHub密码`" />
+                </el-form-item>
+              </el-form>
             </div>
-            <el-form
-              v-if="restaurant?.grubhub_status === 0 || restaurant.grubhub_status === 3"
-              class="w-full mt-7"
-              :ref="`grubhubRef`"
-              :model="ruleForm"
-              :rules="platformsRules[2]"
-              size="large"
-            >
-              <el-form-item prop="grubhub_username">
-                <el-input v-model="ruleForm[`${'grubhub'}_username`]" :placeholder="`GrubHub账号`" size="large" />
-              </el-form-item>
-              <el-form-item prop="grubhub_password">
-                <el-input type="grubhub_password" v-model="ruleForm[`${'grubhub'}_password`]" :placeholder="`GrubHub密码`" />
-              </el-form-item>
-            </el-form>
           </div>
-        </div>
+        </el-radio-group>
 
         <el-button class="w-2/3 self-center !rounded-3xl" size="large" color="#2C72FE" @click="toAddRestaurant"> 添加完成 </el-button>
         <div class="text-#8F92A1 text-sm mt-5 text-center">如需验证，我们有专人联系您来通过验证</div>
@@ -139,8 +147,8 @@
   const router = useRouter();
   const route = useRoute();
   const userStore = useUserStore();
-  const { id: restaurantId } = route.query;
-
+  const { id: restaurantId } = route.query || {};
+  const radioPlatform = ref('ubereats');
   let ruleForm = reactive({
     doordash_username: '',
     doordash_password: '',
@@ -167,10 +175,9 @@
     },
   ];
 
-  const restaurant: any = ref([]);
+  const restaurant: any = ref({});
   onBeforeMount(async () => {
     const data = await getRestaurantDetail({ restaurant_id: Number(restaurantId) });
-    console.log('data----: ', data);
     restaurant.value = data;
   });
   const checkButtonStatus = (status) => {
@@ -179,15 +186,19 @@
     if (status === 2) return { text: '审核中...', type: 'text' };
     if (status === 3) return { text: '审核未通过，请核实账号密码重新输入', type: 'text' };
   };
+  const checkShowForm = (platform) => {
+    if (restaurantId) {
+      return restaurant.value[`${platform}_status`] === 0 || restaurant.value[`${platform}_status`] === 3;
+    } else {
+      return radioPlatform.value === platform;
+    }
+  };
   // Status为0  未绑定  1 已绑定  2审核中 3 审核不通过
   const getButtonStyle = (key) => {
     const status = restaurant.value[`${key}_status`];
     return checkButtonStatus(status);
   };
 
-  const toAddRestaurant = () => {
-    router.push('/restaurant');
-  };
   const handlePlatform = async (platform) => {
     const { doordash_status, ubereats_status, grubhub_status } = restaurant.value;
     const {
@@ -222,7 +233,7 @@
     if (!formEl) return;
     await formEl.validate(async (valid, fields) => {
       if (valid) {
-        if (Number(restaurantId)) {
+        if (restaurantId) {
           await updateRestaurant({ ...data, restaurant_id: Number(restaurantId) });
           restaurant.value = await getRestaurantDetail({ restaurant_id: Number(restaurantId) });
         } else {
@@ -234,17 +245,31 @@
           if (typeof message === 'string') {
             ElMessage.warning(message);
           }
-          toAddRestaurant();
+          // router.push('/restaurant');
         }
       } else {
-        console.log('error submit!', fields);
       }
     });
+  };
+
+  const toAddRestaurant = () => {
+    if (restaurantId) {
+      router.push('/restaurant');
+    } else {
+      console.log('radioPlatform.value: ', radioPlatform.value);
+      handlePlatform(radioPlatform.value);
+    }
   };
 </script>
 <style lang="less" scoped>
   :deep(.el-input__wrapper) {
     box-shadow: none !important;
     background: #fff !important;
+  }
+  :deep(.el-radio) {
+    transform: scale(1.5);
+  }
+  :deep(.el-radio__label) {
+    display: none;
   }
 </style>

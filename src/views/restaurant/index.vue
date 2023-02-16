@@ -77,7 +77,7 @@
     router.push(`/restaurant/detail?restaurantId=${data.id}`);
   };
   const toAddRestaurant = () => {
-    router.push('/restaurant/edit');
+    router.push('/bind');
   };
   const toEditRestaurant = (restaurantId) => {
     router.push(`/restaurant/edit?restaurantId=${restaurantId}`);

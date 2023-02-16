@@ -48,7 +48,7 @@
         </el-form-item>
       </el-form>
       <el-button class="w-2/3 self-center !rounded-3xl mt-4" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
-        {{ restaurantId ? '修改' : '添加餐厅' }}
+        绑定平台
       </el-button>
     </div>
   </div>
@@ -140,8 +140,7 @@
       if (valid) {
         if (restaurantId) {
           await updateRestaurant({ ...ruleForm, restaurant_id: Number(restaurantId) });
-          ElMessage.success('修改成功');
-          router.push('/restaurant');
+          router.push(`/bind?id=${restaurantId}`);
         } else {
           const params = {
             ...ruleForm,
