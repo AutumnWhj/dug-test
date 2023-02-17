@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-4 flex flex-col items-center relative mb-20">
-    <div class="w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
+  <div class="pt-4 flex flex-col items-center relative mb-20 mx-5 md:mx-0">
+    <div class="w-full md:w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="flex flex-col items-center mb-16">
         <el-image class="h-16 mb-4" :src="logoTextImage" />
         <div class="text-sm text-black font-bold mb-6"> SERVICES AGREEMENT</div>

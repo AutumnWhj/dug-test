@@ -4,8 +4,8 @@
       <div class="flex flex-col items-center">
         <div class="flex items-center self-center">
           <el-image v-if="hasPre" class="h-7 mr-5 cursor-pointer rotate-180" :src="arrowRightImage" @click="handleSwitchPage('pre')" />
-          <el-image class="h-24 rounded-md" :src="currentRestaurant?.image" />
-          <el-image v-if="hasNext" class="h-7 ml-5 cursor-pointer" :src="arrowRightImage" @click="handleSwitchPage('next')" />
+          <el-image class="h-24 w-24 rounded-md" :src="currentRestaurant?.image" />
+          <el-image v-if="hasNext" class="h-7 w-4 ml-5 cursor-pointer" :src="arrowRightImage" @click="handleSwitchPage('next')" />
         </div>
         <div class="text-black font-medium text-sm mt-2 mb-6">{{ currentRestaurant?.name }}</div>
       </div>
@@ -31,8 +31,8 @@
           <div class="flex justify-between items-center">
             <div class="flex items-center">
               <el-checkbox :label="item.id" class="pr-4 md:pr-6" />
-              <el-image class="h-6 md:h-8 mr-3" :src="pdfIconImage" />
-              <div class="text-black w-40 md:w-full font-medium text-base md:text-sm">{{ item.filename }}</div>
+              <el-image class="h-7 w-6 md:w-7 md:h-8 mr-3" :src="pdfIconImage" />
+              <div class="text-black w-48 md:w-full font-medium text-base md:text-sm">{{ item.filename }}</div>
             </div>
             <div class="flex flex-1 items-center justify-end gap-2 md:gap-5">
               <div

@@ -16,11 +16,11 @@
       >
       </iframe>
     </div>
-    <div class="flex justify-center gap-6 md:gap-16 mt-8">
-      <el-button class="w-60 !h-16 !rounded-[48px] !font-bold !text-primary !text-lg !border-primary cursor-pointer">
+    <div class="flex justify-center gap-4 md:gap-6 mt-8">
+      <el-button class="w-56 md:w-60 !h-16 !rounded-[56px] !font-bold !text-primary !text-lg !border-primary cursor-pointer">
         <div class="py-4" @click="dialogVisible = true">Contact us</div>
       </el-button>
-      <el-button class="w-60 !h-16 !rounded-[48px] !font-bold text-white !text-lg cursor-pointer" color="#2c73ff" @click="toLogin">
+      <el-button class="w-48 md:w-60 !h-16 !rounded-[48px] !font-bold text-white !text-lg cursor-pointer" color="#2c73ff" @click="toLogin">
         <div class="py-4">Login or Register</div>
       </el-button>
     </div>
