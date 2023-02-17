@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col items-center relative mt-12">
-    <div class="w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
+  <div class="flex flex-col items-center relative mt-12 mx-5 md:mx-0">
+    <div class="w-full md:w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="w-full flex flex-col">
         <div class="text-center mb-8">
           <div class="text-gray-300 text-xl mb-3">{{ !restaurantId ? '绑定外卖平台' : '完善绑定外卖平台' }} </div>
