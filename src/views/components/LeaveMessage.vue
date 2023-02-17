@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="hidden md:block">
     <el-popover placement="top-start" popper-class="tip-popover" :width="256" trigger="hover" :visible="showTip">
       <div v-if="!showComment" class="text-base font-medium text-primary">如需人工帮助，可点击下方留言联系我们。</div>
       <template #reference>
@@ -84,6 +84,12 @@
   .tip-popover {
     padding: 28px 22px !important;
     border-radius: 16px !important;
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .tip-popover {
+      display: block;
+    }
   }
   .comment-popover {
     padding: 0 !important;

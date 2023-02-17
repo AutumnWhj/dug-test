@@ -1,9 +1,10 @@
 <template>
-  <div class="flex flex-col items-center relative mt-12">
-    <div class="w-2/5 min-w-xl card-shadow flex flex-col bg-white py-10 px-12 rounded-3xl">
+  <div class="flex flex-col items-center relative mt-12 mx-5 md:mx-0">
+    <div class="w-full md:w-2/5 md:min-w-xl card-shadow flex flex-col bg-white py-10 px-4 md:px-12 rounded-3xl">
       <div class="text-center mb-8">
-        <div class="text-gray-300 text-xl mb-3">填写您的餐厅资料</div>
-        <div class="text-gray-300/50 text-sm">你好，XXX(你的名字)</div>
+        <!-- <div class="text-gray-300 text-xl mb-3">填写您的餐厅资料</div>
+        <div class="text-gray-300/50 text-sm">你好，XXX(你的名字)</div> -->
+        <div class="text-primary font-bold text-xl">你好，XXX(你的名字)</div>
       </div>
       <el-form class="w-full" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large">
         <el-form-item prop="name">
@@ -37,17 +38,17 @@
               :before-upload="beforeAvatarUpload"
               :http-request="httpRequest"
             >
-              <el-image v-if="ruleForm.image" :src="ruleForm.image" class="avatar" />
+              <el-image v-if="ruleForm.image" :src="ruleForm.image" class="w-24 md:w-42" />
               <!-- <el-icon v-else ><Plus /></el-icon> -->
               <div v-else class="avatar-uploader-icon flex items-center justify-center">
-                <el-image class="w-10" :src="plusImage" />
+                <el-image class="w-6 md:w-10" :src="plusImage" />
               </div>
             </el-upload>
             <div class="ml-6 text-gray-300/50 text-sm">请添加餐厅LOGO（PNG格式）</div>
           </div>
         </el-form-item>
       </el-form>
-      <el-button class="w-2/3 self-center !rounded-3xl mt-4" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
+      <el-button class="w-2/3 self-center !rounded-3xl mt-6" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
         绑定平台
       </el-button>
     </div>
@@ -158,11 +159,6 @@
   };
 </script>
 <style lang="less" scoped>
-  .avatar-uploader .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
   :deep(.el-input__wrapper) {
     box-shadow: none !important;
   }

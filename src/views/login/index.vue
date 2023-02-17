@@ -85,7 +85,9 @@
   onMounted(() => {
     const localString = sessionStorage.getItem('is_remember');
     if (localString) {
-      ruleForm = JSON.parse(localString);
+      const { username, password } = JSON.parse(localString) || {};
+      ruleForm.username = username;
+      ruleForm.password = password;
       isRemember.value = true;
     }
   });

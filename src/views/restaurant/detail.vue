@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col items-center relative mt-12 mb-20">
-    <div class="w-3/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
+  <div class="flex flex-col items-center relative mt-12 mb-20 mx-5 md:mx-0">
+    <div class="w-full md:w-3/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="flex flex-col items-center">
         <div class="flex items-center self-center">
           <el-image v-if="hasPre" class="h-7 mr-5 cursor-pointer rotate-180" :src="arrowRightImage" @click="handleSwitchPage('pre')" />
@@ -9,16 +9,15 @@
         </div>
         <div class="text-black font-medium text-sm mt-2 mb-6">{{ currentRestaurant?.name }}</div>
       </div>
-      <el-empty v-if="report.length === 0" description="暂未生成报告" />
       <div class="filter-box mb-4 flex justify-between items-center">
-        <el-select v-model="selectTime" class="w-32" placeholder="Select" @change="handleSelectChange">
+        <el-select v-model="selectTime" class="w-32 !h-10" placeholder="Select" @change="handleSelectChange">
           <el-option v-for="item in timeOptions" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
 
         <div v-if="report.length" class="flex justify-end items-center">
           <el-checkbox v-model="allCheck" label="全选" @change="handleCheckAll" />
           <div
-            class="ml-4 button-shadow bg-white px-5 py-2 flex items-center justify-center rounded-2xl gap-3 cursor-pointer"
+            class="ml-4 button-shadow h-10 bg-white px-5 py-2 flex items-center justify-center rounded-2xl gap-3 cursor-pointer"
             @click="handleDownload({ type: 'all' })"
           >
             <span class="text-gray-300 font-bold text-sm">批量下载</span>
@@ -26,15 +25,16 @@
           </div>
         </div>
       </div>
+      <el-empty v-if="report.length === 0" description="暂未生成报告" />
       <el-checkbox-group v-model="checkList" v-loading="loading">
         <div v-for="item in report" :key="item.id" class="report-list mb-4 bg-gray-800 p-5 rounded-2xl">
           <div class="flex justify-between items-center">
             <div class="flex items-center">
-              <el-checkbox :label="item.id" class="pr-6" />
-              <el-image class="h-8 mr-3" :src="pdfIconImage" />
-              <div class="text-black font-medium text-sm">{{ item.filename }}</div>
+              <el-checkbox :label="item.id" class="pr-4 md:pr-6" />
+              <el-image class="h-6 md:h-8 mr-3" :src="pdfIconImage" />
+              <div class="text-black w-40 font-medium text-sm">{{ item.filename }}</div>
             </div>
-            <div class="flex items-center gap-5">
+            <div class="flex flex-1 items-center justify-end gap-2 md:gap-5">
               <div
                 class="button-shadow bg-white p-3 flex items-center justify-center rounded-full cursor-pointer"
                 @click="openPdf(item.filepath)"
@@ -42,10 +42,10 @@
                 <SvgIcon name="svg-search" class="text-base text-gray-300 font-bold" />
               </div>
               <div
-                class="button-shadow bg-white px-5 py-2 flex items-center justify-center rounded-2xl gap-3 cursor-pointer"
+                class="button-shadow bg-white p-3 md:px-5 md:py-2 flex items-center justify-center rounded-full md:rounded-2xl gap-3 cursor-pointer"
                 @click="handleDownload({ type: 'single', filename: item.filename, filepath: item.filepath })"
               >
-                <span class="text-gray-300 font-bold text-sm">下载文档</span>
+                <span class="text-gray-300 font-bold text-sm hidden md:block">下载文档</span>
                 <SvgIcon name="svg-download" class="text-base text-gray-300 font-bold" />
               </div>
             </div>
@@ -112,7 +112,10 @@
     loading.value = true;
     allCheck.value = false;
     checkList.value = [];
-    const { list, page } = await getRestaurantReport(params);
+    const { list, page } = await getRestaurantReport({
+      ...params,
+      page_size: selectTime.value,
+    });
     report.value = list;
     loading.value = false;
     if (!pageCount.value) {
@@ -202,6 +205,9 @@
       display: none;
     }
   }
+  :deep(.el-checkbox__label) {
+    font-size: 0.875rem;
+  }
   .filter-box {
     :deep(.el-input__wrapper) {
       border-radius: 16px;
@@ -210,6 +216,15 @@
     }
     .button-shadow {
       box-shadow: 0px 1px 14px 0px rgba(191, 191, 217, 0.3);
+    }
+    :deep(.el-select) {
+      .el-input {
+        height: 2.5rem;
+      }
+      .el-input__inner {
+        font-size: 0.875rem;
+        font-weight: bold !important;
+      }
     }
   }
 </style>

@@ -3,8 +3,10 @@
     <div class="w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="w-full flex flex-col">
         <div class="text-center mb-8">
-          <div class="text-gray-300 text-xl mb-3">{{ !restaurantId ? '首次绑定外卖平台' : '完善绑定外卖平台' }} </div>
-          <div class="text-gray-300/50 text-sm">将您使用的其他外卖平台进行绑定</div>
+          <div class="text-gray-300 text-xl mb-3">{{ !restaurantId ? '绑定外卖平台' : '完善绑定外卖平台' }} </div>
+          <div class="text-gray-300/50 text-sm"
+            >{{ !restaurantId ? '选择一个您餐厅常使用的外卖平台做首次绑定' : '将您使用的其他外卖平台进行绑定' }}
+          </div>
         </div>
         <el-radio-group v-model="radioPlatform">
           <div :key="'doordash'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl w-full" @click="radioPlatform = 'doordash'">
@@ -100,7 +102,7 @@
                   class="!min-w-28 self-center !rounded-3xl"
                   color="#2C72FE"
                   size="large"
-                  :plain="getButtonStyle('grubhub')?.type === 'plain'"
+                  :type="getButtonStyle('grubhub')?.type"
                   @click="handlePlatform('grubhub')"
                 >
                   {{ getButtonStyle('grubhub')?.text }}
@@ -110,7 +112,7 @@
               <el-form
                 v-show="checkShowForm('grubhub')"
                 class="w-full mt-7"
-                :ref="`grubhubRef`"
+                ref="grubhubRef"
                 :model="ruleForm"
                 :rules="platformsRules[2]"
                 size="large"
@@ -148,7 +150,7 @@
   const route = useRoute();
   const userStore = useUserStore();
   const { id: restaurantId } = route.query || {};
-  const radioPlatform = ref('ubereats');
+  const radioPlatform = ref('doordash');
   let ruleForm = reactive({
     doordash_username: '',
     doordash_password: '',
@@ -194,7 +196,7 @@
     }
   };
   // Status为0  未绑定  1 已绑定  2审核中 3 审核不通过
-  const getButtonStyle = (key) => {
+  const getButtonStyle = (key): any => {
     const status = restaurant.value[`${key}_status`];
     return checkButtonStatus(status);
   };
@@ -231,7 +233,7 @@
   };
   const submitForm = async (formEl: FormInstance | undefined, data) => {
     if (!formEl) return;
-    await formEl.validate(async (valid, fields) => {
+    await formEl.validate(async (valid) => {
       if (valid) {
         if (restaurantId) {
           await updateRestaurant({ ...data, restaurant_id: Number(restaurantId) });
@@ -245,7 +247,7 @@
           if (typeof message === 'string') {
             ElMessage.warning(message);
           }
-          // router.push('/restaurant');
+          router.push('/restaurant');
         }
       } else {
       }
