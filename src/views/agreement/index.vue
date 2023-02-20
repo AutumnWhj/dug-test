@@ -2,7 +2,7 @@
   <div class="pt-4 flex flex-col items-center relative mb-20 mx-5 md:mx-0">
     <div class="w-full md:w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="flex flex-col items-center mb-16">
-        <el-image class="h-16 mb-4" :src="logoTextImage" />
+        <el-image class="h-16 w-16 mb-4" :src="logoTextImage" />
         <div class="text-sm text-black font-bold mb-6"> SERVICES AGREEMENT</div>
         <el-scrollbar ref="scrollbar" height="28rem" :always="true" @scroll="handleScroll">
           <div class="text-xs text-black leading-normal px-6">

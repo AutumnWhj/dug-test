@@ -1,7 +1,7 @@
 <template>
   <el-dialog v-model="dialogVisible" :show-close="false" center width="25%">
     <div class="flex flex-col items-center mb-36">
-      <el-image class="h-16 mb-12" :src="logoTextImage" />
+      <el-image class="h-16 w-16 mb-12" :src="logoTextImage" />
       <div class="text-xl text-gray-300 mb-4">谢谢您的支持</div>
       <div class="text-sm text-gray-300/50">我们会在24小时内联系您</div>
     </div>
