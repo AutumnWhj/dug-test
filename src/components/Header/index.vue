@@ -14,7 +14,13 @@
       <a v-if="isHomePath" class="mr-9 text-gray-500 hidden md:block" :class="{ active: route.hash === '#contact' }" href="#contact"
         >Contact</a
       >
-      <el-button v-if="isHomePath" class="!rounded-2xl mr-9 w-32 !font-bold !hidden md:block" size="large" color="#2C72FE" @click="toLogin">
+      <el-button
+        v-if="isHomePath"
+        class="!rounded-2xl mr-9 w-32 !font-bold !hidden md:!block"
+        size="large"
+        color="#2C72FE"
+        @click="toLogin"
+      >
         Login
       </el-button>
       <el-dropdown trigger="click" @command="handleCommand">

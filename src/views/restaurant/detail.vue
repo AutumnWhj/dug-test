@@ -2,12 +2,14 @@
   <div class="flex flex-col items-center relative mt-12 mb-20 mx-5 md:mx-0">
     <div class="w-full md:w-3/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="flex flex-col items-center">
-        <div class="flex items-center self-center">
+        <div class="flex items-center self-center mb-6">
           <el-image v-if="hasPre" class="h-7 mr-5 cursor-pointer rotate-180" :src="arrowRightImage" @click="handleSwitchPage('pre')" />
-          <el-image class="h-24 w-24 rounded-md" :src="currentRestaurant?.image" />
+          <div class="flex flex-col items-center">
+            <el-image class="h-24 w-24 rounded-md" :src="currentRestaurant?.image" />
+            <div class="text-black font-medium text-sm mt-2">{{ currentRestaurant?.name }}</div>
+          </div>
           <el-image v-if="hasNext" class="h-7 w-4 ml-5 cursor-pointer" :src="arrowRightImage" @click="handleSwitchPage('next')" />
         </div>
-        <div class="text-black font-medium text-sm mt-2 mb-6">{{ currentRestaurant?.name }}</div>
       </div>
       <div class="filter-box mb-4 flex justify-between items-center">
         <el-select v-model="selectTime" class="w-32 !h-10" placeholder="Select" @change="handleSelectChange">
@@ -118,9 +120,16 @@
     });
     report.value = list;
     loading.value = false;
+
+    console.log('pageCount.value: ', pageCount.value);
+    console.log('page: ', page);
     if (!pageCount.value) {
       pageCount.value = page;
     }
+    return {
+      list,
+      page,
+    };
   };
   onBeforeMount(async () => {
     await getReports(defaultParams);
@@ -145,11 +154,12 @@
     },
   );
 
-  const handleSelectChange = (value) => {
-    getReports({
+  const handleSelectChange = async (value) => {
+    const { page } = await getReports({
       ...defaultParams,
       page_size: value,
     });
+    pageCount.value = page || 1;
   };
   const handleCheckAll = (value) => {
     if (value) {
@@ -159,6 +169,7 @@
     }
   };
   const handleCurrentChange = (value) => {
+    console.log('handleCurrentChange--value: ', value);
     getReports({
       ...defaultParams,
       page_num: value,

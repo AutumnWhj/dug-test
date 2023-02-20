@@ -12,7 +12,7 @@
           <div :key="'doordash'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl w-full" @click="radioPlatform = 'doordash'">
             <div class="flex flex-col justify-between">
               <div class="flex justify-between items-center">
-                <el-image class="h-12 mr-3" :src="DoorDashImage">
+                <el-image class="h-12 w-32 mr-3" :src="DoorDashImage">
                   <template #error>
                     <div class="w-full h-full flex items-center justify-center">
                       <el-icon><icon-picture /></el-icon>
@@ -51,7 +51,7 @@
           <div :key="'ubereats'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl w-full" @click="radioPlatform = 'ubereats'">
             <div class="flex flex-col justify-between">
               <div class="flex justify-between items-center">
-                <el-image class="h-12 mr-3" :src="UberEatsImage">
+                <el-image class="h-12 w-32 mr-3" :src="UberEatsImage">
                   <template #error>
                     <div class="w-full h-full flex items-center justify-center">
                       <el-icon><icon-picture /></el-icon>
@@ -90,7 +90,7 @@
           <div :key="'grubhub'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl w-full" @click="radioPlatform = 'grubhub'">
             <div class="flex flex-col justify-between">
               <div class="flex justify-between items-center">
-                <el-image class="h-12 mr-3" :src="GrubHubImage">
+                <el-image class="h-12 w-32 mr-3" :src="GrubHubImage">
                   <template #error>
                     <div class="w-full h-full flex items-center justify-center">
                       <el-icon><icon-picture /></el-icon>
