@@ -6,7 +6,7 @@
     </div>
     <div class="min-w-80 max-w-96 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="flex flex-col items-center mb-36">
-        <el-image class="h-16 mb-16" :src="logoTextImage" />
+        <el-image class="h-16 w-16 mb-16" :src="logoTextImage" />
         <div class="text-base text-black font-medium mb-3">首3月免费试用</div>
         <div class="text-base text-black font-medium">立即开始，节省您的时间</div>
       </div>

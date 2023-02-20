@@ -3,7 +3,7 @@
     <div class="w-full md:w-3/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="flex flex-col items-center">
         <div class="flex items-center self-center mb-6">
-          <el-image v-if="hasPre" class="h-7 mr-5 cursor-pointer rotate-180" :src="arrowRightImage" @click="handleSwitchPage('pre')" />
+          <el-image v-if="hasPre" class="h-7 w-4 mr-5 cursor-pointer rotate-180" :src="arrowRightImage" @click="handleSwitchPage('pre')" />
           <div class="flex flex-col items-center">
             <el-image class="h-24 w-24 rounded-md" :src="currentRestaurant?.image" />
             <div class="text-black font-medium text-sm mt-2">{{ currentRestaurant?.name }}</div>
