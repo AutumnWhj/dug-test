@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col items-center relative mt-12 mx-5 md:mx-0">
+  <div class="flex flex-col items-center relative my-12 mx-5 md:mx-0">
     <div class="w-full md:w-2/5 md:min-w-xl card-shadow flex flex-col bg-white py-10 px-4 md:px-12 rounded-3xl">
       <div class="text-center mb-8">
         <!-- <div class="text-gray-300 text-xl mb-3">填写您的餐厅资料</div>
         <div class="text-gray-300/50 text-sm">你好，XXX(你的名字)</div> -->
-        <div class="text-primary font-bold text-xl">你好，XXX(你的名字)</div>
+        <div class="text-primary font-bold text-xl">你好，{{ username }}</div>
       </div>
       <el-form class="w-full" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large">
         <el-form-item prop="name">
@@ -52,6 +52,7 @@
         绑定平台
       </el-button>
     </div>
+    <el-image class="w-12 h-12 mt-5 cursor-pointer" :src="closeIcon" @click="handleClose" />
   </div>
   <LeaveMessage class="fixed left-14 bottom-14 w-auto" />
 </template>
@@ -61,6 +62,8 @@
   import { ElMessage } from 'element-plus';
   import type { FormInstance, FormRules, UploadProps } from 'element-plus';
   import plusImage from '/@/assets/images/plus.png';
+  import closeIcon from '/@/assets/images/close-icon.png';
+
   import { createRestaurant, updateRestaurant, getRestaurantDetail } from '/@/api/user/index';
   import { useRoute, useRouter } from 'vue-router';
   import { useUserStore } from '/@/store/index';
@@ -71,8 +74,11 @@
   console.log('restaurantId-----: ', restaurantId);
   const restaurantInfo: any = ref({});
   const userStore = useUserStore();
-  const { user_id } = userStore;
+  const { user_id, username } = userStore;
 
+  const handleClose = () => {
+    router.push('/restaurant');
+  };
   const ruleFormRef = ref<FormInstance>();
   let ruleForm = reactive({
     name: '',

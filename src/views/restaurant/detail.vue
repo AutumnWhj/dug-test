@@ -34,7 +34,9 @@
             <div class="flex items-center">
               <el-checkbox :label="item.id" class="pr-4 md:pr-6" />
               <el-image class="h-7 w-6 md:w-7 md:h-8 mr-3" :src="pdfIconImage" />
-              <div class="text-black w-48 md:w-full font-medium text-base md:text-sm">{{ item.filename }}</div>
+              <div class="text-black w-48 md:w-full font-medium text-base md:text-sm cursor-pointer" @click="openPdf(item.filepath)">{{
+                item.filename
+              }}</div>
             </div>
             <div class="flex flex-1 items-center justify-end gap-2 md:gap-5">
               <div

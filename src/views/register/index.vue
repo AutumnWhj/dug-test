@@ -61,13 +61,13 @@
     phone_number: '',
     repeatPassword: '',
   });
-  // const validatorPassword = (_rule, value, callback) => {
-  //   if (value !== ruleForm.password) {
-  //     callback('两次输入的密码不一致');
-  //   } else {
-  //     callback();
-  //   }
-  // };
+  const validatorPassword = (_rule, value, callback) => {
+    if (value && (value.length < 8 || value.length > 16)) {
+      callback('密码长度限制8~16位');
+    } else {
+      callback();
+    }
+  };
   const rules = reactive<FormRules>({
     email: [
       { required: true, message: '请输入邮箱', trigger: 'blur' },
@@ -78,12 +78,22 @@
         trigger: 'blur',
       },
     ],
-    username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+    username: [
+      { required: true, message: '请输入用户名', trigger: 'blur' },
+      {
+        pattern: /^[\u4E00-\u9FA5A-Za-z0-9]+$/,
+        message: '用户名不能带有特殊符号',
+        trigger: 'blur',
+      },
+    ],
     phone_number: [{ required: true, message: '请输入电话', trigger: 'blur' }],
-    password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+    password: [
+      { required: true, message: '请输入密码', trigger: 'blur' },
+      { validator: validatorPassword, trigger: 'blur' },
+    ],
     repeatPassword: [
       { required: true, message: '请再次输入密码', trigger: 'blur' },
-      // { validator: validatorPassword, trigger: 'blur' },
+      { validator: validatorPassword, trigger: 'blur' },
     ],
   });
 

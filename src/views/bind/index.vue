@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center relative mt-12 mx-5 md:mx-0">
+  <div class="flex flex-col items-center relative my-12 mx-5 md:mx-0">
     <div class="w-full md:w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="w-full flex flex-col">
         <div class="text-center mb-8">
@@ -132,6 +132,7 @@
         <div class="text-#8F92A1 text-sm mt-5 text-center">如需验证，我们有专人联系您来通过验证</div>
       </div>
     </div>
+    <el-image class="w-12 h-12 mt-5 cursor-pointer" :src="closeIcon" @click="handleClose" />
   </div>
   <LeaveMessage class="fixed left-14 bottom-14 w-auto" />
 </template>
@@ -146,6 +147,7 @@
   import DoorDashImage from '/@/assets/images/DoorDash1.png';
   import UberEatsImage from '/@/assets/images/UberEats.png';
   import GrubHubImage from '/@/assets/images/GrubHub.png';
+  import closeIcon from '/@/assets/images/close-icon.png';
   const router = useRouter();
   const route = useRoute();
   const userStore = useUserStore();
@@ -176,6 +178,9 @@
       grubhub_password: [{ required: true, message: '请输入GrubHub密码', trigger: 'blur' }],
     },
   ];
+  const handleClose = () => {
+    router.push('/restaurant');
+  };
 
   const restaurant: any = ref({});
   onBeforeMount(async () => {

@@ -4,7 +4,7 @@
       <div class="w-full flex flex-col">
         <div class="text-center mb-8">
           <div class="text-gray-300 text-xl mb-3">请选择餐厅查看数据</div>
-          <div class="text-gray-300/50 text-sm">你好，XXX(你的名字)</div>
+          <div class="text-gray-300/50 text-sm">你好，{{ username }}</div>
         </div>
         <el-empty v-if="restaurants.length === 0" description="暂无数据" />
         <div v-for="item in restaurants" :key="item.id" class="mb-4 bg-gray-800 px-4 md:px-12 rounded-2xl">
@@ -78,8 +78,8 @@
   const router = useRouter();
   const restaurants: any = ref([]);
   const userStore = useUserStore();
+  const { user_id, username } = userStore;
   onBeforeMount(async () => {
-    const { user_id } = userStore;
     const data = await getRestaurants({ user_id });
     console.log('data----: ', data);
     restaurants.value = data;
