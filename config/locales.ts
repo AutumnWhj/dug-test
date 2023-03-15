@@ -159,6 +159,42 @@ export default {
         three: 'Read',
       },
     },
+    bind: {
+      id: {
+        title: 'Binding delivery platform',
+        desc: 'Bind other delivery platforms you use',
+      },
+      noId: {
+        title: 'Binding delivery platform',
+        desc: 'Choose a delivery platform that your restaurant often uses for the first binding',
+      },
+      doordash: {
+        username: 'DoorDash account',
+        password: 'DoorDash password',
+        usernameRule: 'Please enter the DooDash account',
+        passwordRule: 'Please enter the DooDash password',
+      },
+      ubereats: {
+        username: 'UberEats account',
+        password: 'UberEats password',
+        usernameRule: 'Please enter the UberEats account',
+        passwordRule: 'Please enter the UberEats password',
+      },
+      grubhub: {
+        username: 'GrubHub account',
+        password: 'GrubHub password',
+        usernameRule: 'Please enter the GrubHub account',
+        passwordRule: 'Please enter the GrubHub password',
+      },
+      finishedBtn: 'Finish',
+      tips: 'If you need to verify, we have someone to contact you to pass the verification',
+      status: {
+        0: 'Submit',
+        1: 'Bind successfully',
+        2: 'Reviewing...',
+        3: 'The review failed, please verify the account password and re-enter',
+      },
+    },
   },
   zh: {
     message: {
@@ -318,6 +354,42 @@ export default {
         one: '请滚动阅读条款',
         two: '请滑动到底',
         three: '已阅读',
+      },
+    },
+    bind: {
+      id: {
+        title: '完善绑定外卖平台',
+        desc: '将您使用的其他外卖平台进行绑定',
+      },
+      noId: {
+        title: '绑定外卖平台',
+        desc: '选择一个您餐厅常使用的外卖平台做首次绑定',
+      },
+      doordash: {
+        username: 'DoorDash账号',
+        password: 'DoorDash密码',
+        usernameRule: '请输入DooDash账号',
+        passwordRule: '请输入DooDash密码',
+      },
+      ubereats: {
+        username: 'UberEats账号',
+        password: 'UberEats密码',
+        usernameRule: '请输入UberEats账号',
+        passwordRule: '请输入UberEats密码',
+      },
+      grubhub: {
+        username: 'GrubHub账号',
+        password: 'GrubHub密码',
+        usernameRule: '请输入GrubHub账号',
+        passwordRule: '请输入GrubHub密码',
+      },
+      finishedBtn: '添加完成',
+      tips: '如需验证，我们有专人联系您来通过验证',
+      status: {
+        0: '提交',
+        1: '绑定成功',
+        2: '审核中...',
+        3: '审核未通过，请核实账号密码重新输入',
       },
     },
   },

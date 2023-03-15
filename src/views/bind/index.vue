@@ -3,10 +3,8 @@
     <div class="w-full md:w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="w-full flex flex-col">
         <div class="text-center mb-8">
-          <div class="text-gray-300 text-xl mb-3">{{ !restaurantId ? '绑定外卖平台' : '完善绑定外卖平台' }} </div>
-          <div class="text-gray-300/50 text-sm"
-            >{{ !restaurantId ? '选择一个您餐厅常使用的外卖平台做首次绑定' : '将您使用的其他外卖平台进行绑定' }}
-          </div>
+          <div class="text-gray-300 text-xl mb-3">{{ !restaurantId ? $t('bind.noId.title') : $t('bind.id.title') }} </div>
+          <div class="text-gray-300/50 text-sm">{{ !restaurantId ? $t('bind.noId.desc') : $t('bind.id.desc') }} </div>
         </div>
         <el-radio-group v-model="radioPlatform">
           <div :key="'doordash'" class="mb-4 bg-gray-800 px-12 py-6 rounded-2xl w-full" @click="radioPlatform = 'doordash'">
@@ -40,10 +38,14 @@
                 size="large"
               >
                 <el-form-item prop="doordash_username">
-                  <el-input v-model="ruleForm[`${'doordash'}_username`]" :placeholder="`DoorDash账号`" size="large" />
+                  <el-input v-model="ruleForm[`${'doordash'}_username`]" :placeholder="$t('bind.doordash.username')" size="large" />
                 </el-form-item>
                 <el-form-item prop="doordash_password">
-                  <el-input type="doordash_password" v-model="ruleForm[`${'doordash'}_password`]" :placeholder="`DoorDash密码`" />
+                  <el-input
+                    type="doordash_password"
+                    v-model="ruleForm[`${'doordash'}_password`]"
+                    :placeholder="$t('bind.doordash.password')"
+                  />
                 </el-form-item>
               </el-form>
             </div>
@@ -79,10 +81,14 @@
                 size="large"
               >
                 <el-form-item prop="ubereats_username">
-                  <el-input v-model="ruleForm[`${'ubereats'}_username`]" :placeholder="`UberEats账号`" size="large" />
+                  <el-input v-model="ruleForm[`${'ubereats'}_username`]" :placeholder="$t('bind.ubereats.username')" size="large" />
                 </el-form-item>
                 <el-form-item prop="ubereats_password">
-                  <el-input type="ubereats_password" v-model="ruleForm[`${'ubereats'}_password`]" :placeholder="`UberEats密码`" />
+                  <el-input
+                    type="ubereats_password"
+                    v-model="ruleForm[`${'ubereats'}_password`]"
+                    :placeholder="$t('bind.ubereats.password')"
+                  />
                 </el-form-item>
               </el-form>
             </div>
@@ -118,18 +124,24 @@
                 size="large"
               >
                 <el-form-item prop="grubhub_username">
-                  <el-input v-model="ruleForm[`${'grubhub'}_username`]" :placeholder="`GrubHub账号`" size="large" />
+                  <el-input v-model="ruleForm[`${'grubhub'}_username`]" :placeholder="$t('bind.grubhub.username')" size="large" />
                 </el-form-item>
                 <el-form-item prop="grubhub_password">
-                  <el-input type="grubhub_password" v-model="ruleForm[`${'grubhub'}_password`]" :placeholder="`GrubHub密码`" />
+                  <el-input
+                    type="grubhub_password"
+                    v-model="ruleForm[`${'grubhub'}_password`]"
+                    :placeholder="$t('bind.grubhub.password')"
+                  />
                 </el-form-item>
               </el-form>
             </div>
           </div>
         </el-radio-group>
 
-        <el-button class="w-2/3 self-center !rounded-3xl" size="large" color="#2C72FE" @click="toAddRestaurant"> 添加完成 </el-button>
-        <div class="text-#8F92A1 text-sm mt-5 text-center">如需验证，我们有专人联系您来通过验证</div>
+        <el-button class="w-2/3 self-center !rounded-3xl" size="large" color="#2C72FE" @click="toAddRestaurant">
+          {{ $t('bind.finishedBtn') }}
+        </el-button>
+        <div class="text-#8F92A1 text-sm mt-5 text-center">{{ $t('bind.tips') }}</div>
       </div>
     </div>
     <el-image class="w-12 h-12 mt-5 cursor-pointer" :src="closeIcon" @click="handleClose" />
@@ -148,6 +160,8 @@
   import UberEatsImage from '/@/assets/images/UberEats.png';
   import GrubHubImage from '/@/assets/images/GrubHub.png';
   import closeIcon from '/@/assets/images/close-icon.png';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
   const router = useRouter();
   const route = useRoute();
   const userStore = useUserStore();
@@ -164,20 +178,22 @@
   const doordashRef = ref<FormInstance>();
   const ubereatsRef = ref<FormInstance>();
   const grubhubRef = ref<FormInstance>();
-  const platformsRules = [
-    {
-      doordash_username: [{ required: true, message: '请输入DooDash账号', trigger: 'blur' }],
-      doordash_password: [{ required: true, message: '请输入DooDash密码', trigger: 'blur' }],
-    },
-    {
-      ubereats_username: [{ required: true, message: '请输入UberEats账号', trigger: 'blur' }],
-      ubereats_password: [{ required: true, message: '请输入UberEats密码', trigger: 'blur' }],
-    },
-    {
-      grubhub_username: [{ required: true, message: '请输入GrubHub账号', trigger: 'blur' }],
-      grubhub_password: [{ required: true, message: '请输入GrubHub密码', trigger: 'blur' }],
-    },
-  ];
+  const platformsRules = computed(() => {
+    return [
+      {
+        doordash_username: [{ required: true, message: t('bind.doordash.usernameRule'), trigger: 'blur' }],
+        doordash_password: [{ required: true, message: t('bind.doordash.passwordRule'), trigger: 'blur' }],
+      },
+      {
+        ubereats_username: [{ required: true, message: t('bind.ubereats.usernameRule'), trigger: 'blur' }],
+        ubereats_password: [{ required: true, message: t('bind.ubereats.passwordRule'), trigger: 'blur' }],
+      },
+      {
+        grubhub_username: [{ required: true, message: t('bind.grubhub.usernameRule'), trigger: 'blur' }],
+        grubhub_password: [{ required: true, message: t('bind.grubhub.passwordRule'), trigger: 'blur' }],
+      },
+    ];
+  });
   const handleClose = () => {
     router.push('/restaurant');
   };
@@ -188,10 +204,10 @@
     restaurant.value = data;
   });
   const checkButtonStatus = (status) => {
-    if (status === 0) return { text: '提交', type: 'primary' };
-    if (status === 1) return { text: '绑定成功', type: 'text' };
-    if (status === 2) return { text: '审核中...', type: 'text' };
-    if (status === 3) return { text: '审核未通过，请核实账号密码重新输入', type: 'text' };
+    if (status === 0) return { text: t(`bind.status[${status}]`), type: 'primary' };
+    if (status === 1) return { text: t(`bind.status[${status}]`), type: 'text' };
+    if (status === 2) return { text: t(`bind.status[${status}]`), type: 'text' };
+    if (status === 3) return { text: t(`bind.status[${status}]`), type: 'text' };
   };
   const checkShowForm = (platform) => {
     if (restaurantId) {
