@@ -17,17 +17,17 @@
         </el-select>
 
         <div v-if="report.length" class="flex justify-end items-center">
-          <el-checkbox v-model="allCheck" label="全选" @change="handleCheckAll" />
+          <el-checkbox v-model="allCheck" :label="$t('restaurantDetail.checkAll')" @change="handleCheckAll" />
           <div
             class="ml-4 button-shadow h-10 bg-white px-5 py-2 flex items-center justify-center rounded-2xl gap-3 cursor-pointer"
             @click="handleDownload({ type: 'all' })"
           >
-            <span class="text-gray-300 font-bold text-sm">批量下载</span>
+            <span class="text-gray-300 font-bold text-sm"> {{ $t('restaurantDetail.batch') }}</span>
             <SvgIcon name="svg-download" class="text-base text-gray-300 font-bold" />
           </div>
         </div>
       </div>
-      <el-empty v-if="report.length === 0" description="暂未生成报告" />
+      <el-empty v-if="report.length === 0" :description="$t('restaurantDetail.noData')" />
       <el-checkbox-group v-model="checkList" v-loading="loading">
         <div v-for="item in report" :key="item.id" class="report-list mb-4 bg-gray-800 p-5 rounded-2xl">
           <div class="flex justify-between items-center">
@@ -49,7 +49,7 @@
                 class="button-shadow bg-white p-3 md:px-5 md:py-2 flex items-center justify-center rounded-full md:rounded-2xl gap-3 cursor-pointer"
                 @click="handleDownload({ type: 'single', filename: item.filename, filepath: item.filepath })"
               >
-                <span class="text-gray-300 font-bold text-sm hidden md:block">下载文档</span>
+                <span class="text-gray-300 font-bold text-sm hidden md:block">{{ $t('restaurantDetail.download') }}</span>
                 <SvgIcon name="svg-download" class="text-base text-gray-300 font-bold" />
               </div>
             </div>
@@ -79,6 +79,8 @@
   import { ElMessage } from 'element-plus';
   import router from '/@/router';
   import { useUserStore } from '/@/store';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
   const report: any = ref([]);
   const restaurants: any = ref([]);
   const checkList: any = ref([]);
@@ -97,20 +99,22 @@
     page_size: selectTime.value,
   });
 
-  const timeOptions = [
-    {
-      label: '最近7天',
-      value: 7,
-    },
-    {
-      label: '最近14天',
-      value: 14,
-    },
-    {
-      label: '最近30天',
-      value: 30,
-    },
-  ];
+  const timeOptions = computed(() => {
+    return [
+      {
+        label: t('restaurantDetail.timeOptions[0]'),
+        value: 7,
+      },
+      {
+        label: t('restaurantDetail.timeOptions[1]'),
+        value: 14,
+      },
+      {
+        label: t('restaurantDetail.timeOptions[2]'),
+        value: 30,
+      },
+    ];
+  });
 
   const getReports = async (params) => {
     loading.value = true;
@@ -123,8 +127,6 @@
     report.value = list;
     loading.value = false;
 
-    console.log('pageCount.value: ', pageCount.value);
-    console.log('page: ', page);
     if (!pageCount.value) {
       pageCount.value = page;
     }
@@ -171,7 +173,6 @@
     }
   };
   const handleCurrentChange = (value) => {
-    console.log('handleCurrentChange--value: ', value);
     getReports({
       ...defaultParams,
       page_num: value,
@@ -186,7 +187,7 @@
     const { type, filename, filepath } = params;
     if (type == 'all') {
       if (checkList.value.length === 0) {
-        return ElMessage.warning('请选择要下载的文件');
+        return ElMessage.warning(t('restaurantDetail.downloadTip'));
       }
       const list = report.value
         .map(({ id, filename, filepath }) => {
@@ -198,7 +199,7 @@
           }
         })
         .filter(Boolean);
-      compressAndDownload(list, '报告');
+      compressAndDownload(list, 'report');
     } else {
       downloadFile(filepath, filename);
     }

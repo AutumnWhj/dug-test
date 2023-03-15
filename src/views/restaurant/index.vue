@@ -3,10 +3,10 @@
     <div class="w-full md:w-3/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="w-full flex flex-col">
         <div class="text-center mb-8">
-          <div class="text-gray-300 text-xl mb-3">请选择餐厅查看数据</div>
-          <div class="text-gray-300/50 text-sm">你好，{{ username }}</div>
+          <div class="text-gray-300 text-xl mb-3">{{ $t('restaurant.title') }}</div>
+          <div class="text-gray-300/50 text-sm">{{ $t('restaurant.subTitle') }}{{ username }}</div>
         </div>
-        <el-empty v-if="restaurants.length === 0" description="暂无数据" />
+        <el-empty v-if="restaurants.length === 0" :description="$t('restaurant.noData')" />
         <div v-for="item in restaurants" :key="item.id" class="mb-4 bg-gray-800 px-4 md:px-12 rounded-2xl">
           <div v-if="item.status === 1" class="flex justify-between items-center h-28">
             <div class="flex items-center">
@@ -26,10 +26,10 @@
                 size="large"
                 color="#383838"
                 @click="toEditRestaurant(item.id)"
-                >修改餐厅资料</el-button
+                >{{ $t('restaurant.edit') }}</el-button
               >
               <el-button class="!w-36 self-center !rounded-3xl mt-9 mb-8" size="large" color="#2C72FE" @click="handleReport(item)">
-                查看报告
+                {{ $t('restaurant.check') }}
               </el-button>
             </div>
             <div class="flex md:hidden flex-1 items-center justify-end gap-2 md:gap-5">
@@ -37,7 +37,7 @@
                 class="button-shadow bg-white p-3 md:px-5 md:py-2 flex items-center justify-center rounded-full md:rounded-2xl gap-3 cursor-pointer"
                 @click="toEditRestaurant(item.id)"
               >
-                <span class="text-gray-300 font-bold text-sm hidden md:block">下载文档</span>
+                <span class="text-gray-300 font-bold text-sm hidden md:block">{{ $t('restaurant.download') }}</span>
                 <SvgIcon name="svg-edit" class="text-base text-gray-300 font-bold" />
               </div>
               <div
@@ -61,7 +61,7 @@
           color="#2C72FE"
           @click="toAddRestaurant"
         >
-          添加餐厅
+          {{ $t('restaurant.btn') }}
         </el-button>
       </div>
     </div>

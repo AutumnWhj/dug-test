@@ -4,28 +4,35 @@
       <div class="text-center mb-8">
         <!-- <div class="text-gray-300 text-xl mb-3">填写您的餐厅资料</div>
         <div class="text-gray-300/50 text-sm">你好，XXX(你的名字)</div> -->
-        <div class="text-primary font-bold text-xl">你好，{{ username }}</div>
+        <div class="text-primary font-bold text-xl">{{ $t('restaurantEdit.title') }} {{ username }}</div>
       </div>
       <el-form class="w-full" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large">
         <el-form-item prop="name">
           <el-input v-model="ruleForm.name">
-            <template #prefix> <div class="!mr-5">餐厅名称</div> </template>
+            <template #prefix>
+              <div class="!mr-5">{{ $t('restaurantEdit.name') }} </div>
+            </template>
           </el-input>
         </el-form-item>
         <el-form-item prop="address">
           <el-input v-model="ruleForm.address">
-            <template #prefix> <div class="!mr-5">餐厅地址</div> </template>
+            <template #prefix>
+              <div class="!mr-5">{{ $t('restaurantEdit.address') }}</div>
+            </template>
           </el-input>
         </el-form-item>
         <el-form-item prop="phone_number">
           <el-input v-model="ruleForm.phone_number">
-            <template #prefix> <div class="!mr-5">联系电话</div> </template>
+            <template #prefix>
+              <div class="!mr-5">{{ $t('restaurantEdit.phone_number') }}</div>
+            </template>
           </el-input>
         </el-form-item>
         <el-form-item prop="kind">
-          <el-select v-model="ruleForm.kind" size="large" placeholder="请选择获取时间" class="w-full">
-            <template #prefix> <div class="!mr-5">获取Summary order时间</div> </template>
-
+          <el-select v-model="ruleForm.kind" size="large" :placeholder="$t('restaurantEdit.timePlaceholder')" class="w-full">
+            <template #prefix>
+              <div class="!mr-5">{{ $t('restaurantEdit.timeText') }}</div>
+            </template>
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </el-form-item>
@@ -44,12 +51,12 @@
                 <el-image class="w-6 md:w-10" :src="plusImage" />
               </div>
             </el-upload>
-            <div class="ml-6 text-gray-300/50 text-sm">请添加餐厅LOGO（PNG格式）</div>
+            <div class="ml-6 text-gray-300/50 text-sm">{{ $t('restaurantEdit.uploadTip') }}</div>
           </div>
         </el-form-item>
       </el-form>
       <el-button class="w-2/3 self-center !rounded-3xl mt-6" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
-        绑定平台
+        {{ $t('restaurantEdit.btn') }}
       </el-button>
     </div>
     <el-image class="w-12 h-12 mt-5 cursor-pointer" :src="closeIcon" @click="handleClose" />
@@ -68,6 +75,8 @@
   import { useRoute, useRouter } from 'vue-router';
   import { useUserStore } from '/@/store/index';
   import { uploadFile } from '/@/utils/upload';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
   const route = useRoute();
   const router = useRouter();
   const { restaurantId } = route.query;
@@ -103,26 +112,27 @@
   });
 
   const rules = reactive<FormRules>({
-    name: [{ required: true, message: '请输入餐厅名称', trigger: 'blur' }],
-    address: [{ required: true, message: '请输入餐厅地址', trigger: 'blur' }],
-    phone_number: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
-    kind: [{ required: true, message: '请选择获取Summary order时间', trigger: 'blur' }],
-    // image: [{ required: true, message: '请添加餐厅LOGO', trigger: 'blur' }],
+    name: [{ required: true, message: t('restaurantEdit.rules.name'), trigger: 'blur' }],
+    address: [{ required: true, message: t('restaurantEdit.rules.address'), trigger: 'blur' }],
+    phone_number: [{ required: true, message: t('restaurantEdit.rules.phone_number'), trigger: 'blur' }],
+    kind: [{ required: true, message: t('restaurantEdit.rules.kind'), trigger: 'blur' }],
   });
-  const options = [
-    {
-      value: 0,
-      label: '每三天一次',
-    },
-    {
-      value: 1,
-      label: '每五天一次',
-    },
-    {
-      value: 2,
-      label: '每七天一次',
-    },
-  ];
+  const options = computed(() => {
+    return [
+      {
+        value: 0,
+        label: t('restaurantEdit.timeOptions[0]'),
+      },
+      {
+        value: 1,
+        label: t('restaurantEdit.timeOptions[1]'),
+      },
+      {
+        value: 2,
+        label: t('restaurantEdit.timeOptions[2]'),
+      },
+    ];
+  });
   const httpRequest = async (params) => {
     const { file } = params;
     const url = await uploadFile(file);
@@ -135,7 +145,7 @@
     //   return false;
     // } else
     if (rawFile.size / 1024 / 1024 > 2) {
-      ElMessage.error('LOGO大小不能超过 2MB!');
+      ElMessage.error(t('restaurantEdit.message.error'));
       return false;
     }
     return true;
@@ -155,7 +165,7 @@
           };
           console.log('params: ', params);
           const id = await createRestaurant(params);
-          ElMessage.success('新建成功');
+          ElMessage.success(t('restaurantEdit.message.success'));
           router.push(`/agreement?id=${id}`);
         }
       } else {

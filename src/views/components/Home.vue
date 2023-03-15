@@ -3,7 +3,9 @@
     <div class="text-gray-600 font-bold text-center leading-snug mb-6">
       <div class="text-[4.5rem] text-blue-500">{{ $t('home.Slogan[0]') }}</div>
       <div class="text-[3.75rem]">{{ $t('home.Slogan[1]') }}</div>
-      <div class="text-[4.5rem] text-blue-500">{{ $t('home.Slogan[2]') }}</div>
+      <div class="text-[4.5rem] text-blue-500" :class="{ '!text-[#8D8E91] !text-5xl mt-4': $t('message.lang') === '中文' }">{{
+        $t('home.Slogan[2]')
+      }}</div>
       <div class="text-[3.75rem]">{{ $t('home.Slogan[3]') }}</div>
     </div>
     <div class="w-full md:w-[580px] h-96 bg-black mt-11">
