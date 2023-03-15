@@ -1,7 +1,7 @@
 <template>
   <div class="hidden md:block">
     <el-popover placement="top-start" popper-class="tip-popover" :width="256" trigger="hover" :visible="showTip">
-      <div v-if="!showComment" class="text-base font-medium text-primary">如需人工帮助，可点击下方留言联系我们。</div>
+      <div v-if="!showComment" class="text-base font-medium text-primary">{{ $t('leaveMessage.tip') }}</div>
       <template #reference>
         <div
           v-show="!showComment"
@@ -15,7 +15,7 @@
     <el-popover placement="top-start" popper-class="comment-popover" :width="437" trigger="hover" :visible="showComment">
       <div v-if="showComment" class="relative flex flex-col">
         <div v-if="successComment" class="flex flex-col items-center pt-16 justify-center">
-          <div class="mb-10 text-black">我们会在24小时内通过邮件或电话联系您解决您的问题</div>
+          <div class="mb-10 text-black px-6">{{ $t('leaveMessage.notice') }}</div>
           <el-button
             class="rounded-3xl mb-6 mr-4 w-20"
             color="#2C72FE"
@@ -24,7 +24,7 @@
               successComment = false;
             "
           >
-            确认
+            {{ $t('leaveMessage.commentBtn') }}
           </el-button>
         </div>
 
@@ -35,14 +35,16 @@
             </div>
             <div class="text-white font-medium">DUG service</div>
           </div>
-          <el-input v-model="leaveMessage" resize="none" type="textarea" :rows="4" placeholder="Type your message" />
-          <el-button class="!rounded-3xl self-end mb-4 mr-4 w-20" color="#2C72FE" @click="sendMessage"> Send </el-button>
+          <el-input v-model="leaveMessage" resize="none" type="textarea" :rows="4" :placeholder="$t('leaveMessage.typeMessage')" />
+          <el-button class="!rounded-3xl self-end mb-4 mr-4 w-20" color="#2C72FE" @click="sendMessage">
+            {{ $t('leaveMessage.sendText') }}
+          </el-button>
         </div>
 
         <div class="absolute -bottom-24 left-20 px-4 py-3 card-shadow bg-white text-sm font-medium text-primary rounded-2xl">
-          <div>Tel：+001 000 000 000</div>
-          <div>Email：dugsolutions.com</div>
-          <div>WeChat：dugsolutions</div>
+          <div>Tel:{{ $t('home.ContactInfo.Tel') }}</div>
+          <div>Email：{{ $t('home.ContactInfo.Email') }}</div>
+          <div>WeChat：{{ $t('home.ContactInfo.WeChat') }}</div>
         </div>
       </div>
       <template #reference>

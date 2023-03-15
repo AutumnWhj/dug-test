@@ -10,6 +10,13 @@ export default {
       contact: 'contact',
       Login: 'Login',
     },
+    leaveMessage: {
+      tip: 'If you need manual assistance, please click the message below to contact us.',
+      notice: 'We will contact you by email or phone within 24 hours to solve your problem',
+      commentBtn: 'Confirm',
+      typeMessage: 'Type your message',
+      sendText: 'Send',
+    },
     home: {
       Slogan: ['One stop solution', 'to get your third party', 'delivery service disputes', 'charges needs.'],
       ButtonTexts: ['Contact us', 'Login or Register'],
@@ -207,6 +214,13 @@ export default {
       contact: '联系我们',
       Login: '登录',
     },
+    leaveMessage: {
+      tip: '如需人工帮助，可点击下方留言联系我们。',
+      notice: '我们会在24小时内通过邮件或电话联系您解决您的问题',
+      commentBtn: '确认',
+      typeMessage: '留言',
+      sendText: '发送',
+    },
     home: {
       Slogan: ['一站式', '帮您解决', '第三方送餐服务纠纷费用需求', '纠纷费用需求'],
       ButtonTexts: ['联系我们', '登录/注册'],
@@ -394,3 +408,4 @@ export default {
     },
   },
 };
+// Type your message Send
