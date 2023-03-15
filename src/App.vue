@@ -6,6 +6,14 @@
 </template>
 <script setup lang="ts">
   import Header from '/@/components/Header/index.vue';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
+  watch(
+    () => t('message.lang'),
+    () => {
+      // window.reload();
+    },
+  );
 </script>
 
 <style>

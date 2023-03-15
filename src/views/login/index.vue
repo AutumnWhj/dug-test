@@ -3,25 +3,28 @@
     <el-image class="h-28 w-28 mb-10" :src="logoTextImage" />
     <div class="min-w-96 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="text-center mb-8">
-        <div class="text-gray-300 text-xl mb-3">登录</div>
-        <div class="text-gray-300/50 text-sm">欢迎回来</div>
+        <div class="text-gray-300/50 text-sm"> {{ $t('login.title') }} </div>
       </div>
       <el-form class="w-full" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large">
         <el-form-item prop="username">
-          <el-input v-model="ruleForm.username" placeholder="用户名" size="large" />
+          <el-input v-model="ruleForm.username" :placeholder="$t('login.form.username')" size="large" />
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" v-model="ruleForm.password" placeholder="密码" />
+          <el-input type="password" v-model="ruleForm.password" :placeholder="$t('login.form.password')" />
         </el-form-item>
       </el-form>
       <div class="w-full flex justify-between items-center mb-16">
-        <el-checkbox v-model="isRemember" label="记住密码" size="small" @change="handleCheckChange" />
-        <div class="text-primary text-xs cursor-pointer hover:text-blue-500/70" @click="toForgotPassword">忘记密码</div>
+        <el-checkbox v-model="isRemember" :label="$t('login.form.remember')" size="small" @change="handleCheckChange" />
+        <div class="text-primary text-xs cursor-pointer hover:text-blue-500/70" @click="toForgotPassword">{{
+          $t('login.form.forgotPassword')
+        }}</div>
       </div>
-      <el-button class="w-full !rounded-3xl mb-12" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)"> Login </el-button>
+      <el-button class="w-full !rounded-3xl mb-12" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
+        {{ $t('login.btn') }}</el-button
+      >
       <div class="text-center">
-        <span class="text-gray-300/50 text-xs"> 没有账户？</span>
-        <span class="text-primary text-xs cursor-pointer hover:text-blue-500/70" @click="toRegister">注册</span>
+        <span class="text-gray-300/50 text-xs"> {{ $t('login.noAccount') }}</span>
+        <span class="text-primary text-xs cursor-pointer hover:text-blue-500/70" @click="toRegister"> {{ $t('login.register') }}</span>
       </div>
     </div>
   </div>
@@ -30,10 +33,12 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
   import { ElMessage } from 'element-plus';
-  import type { FormInstance, FormRules } from 'element-plus';
+  import type { FormInstance } from 'element-plus';
   import logoTextImage from '/@/assets/images/logo_text.png';
   import { useUserStore } from '/@/store';
   import { isLogin } from '/@/utils/auth';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
   const userStore = useUserStore();
   const ruleFormRef = ref<FormInstance>();
   let ruleForm = reactive({
@@ -41,9 +46,11 @@
     password: '',
   });
 
-  const rules = reactive<FormRules>({
-    username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-    password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  const rules = computed(() => {
+    return {
+      username: [{ required: true, message: t('login.rules.username'), trigger: 'blur' }],
+      password: [{ required: true, message: t('login.rules.password'), trigger: 'blur' }],
+    };
   });
 
   const isRemember = ref(false);
@@ -52,12 +59,11 @@
     await formEl.validate(async (valid, fields) => {
       if (valid) {
         userStore.resetInfo();
-        console.log('submit!11111', ruleForm);
         await userStore.login(ruleForm);
         if (isLogin()) {
-          ElMessage.success('登录成功');
+          ElMessage.success(t('login.message.success'));
         } else {
-          ElMessage.error(' 用户名或密码不正确');
+          ElMessage.error(t('login.message.error'));
           return;
         }
         router.push('/restaurant');

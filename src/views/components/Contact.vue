@@ -1,15 +1,14 @@
 <template>
   <div class="flex items-center flex-col md:flex-row justify-between 2xl:justify-around gap-20 w-full relative">
     <div class="text-center md:text-left">
-      <div class="text-primary text-2xl font-bold">Contact</div>
+      <div class="text-primary text-2xl font-bold">{{ $t('home.Contact') }}</div>
       <div class="text-gray-700 font-bold text-6xl mt-4 mb-10 leading-snug">
-        Contact us and <br />
-        <p>let us help you</p>
+        {{ $t('home.ContactTitle') }}
       </div>
       <div class="text-gray-700/50 text-xl font-bold flex flex-col gap-2">
-        <p>Tel:000-000-000</p>
-        <p>Email：dugsolutions.com</p>
-        <p>WeChat：dugsolutions</p>
+        <p>Tel:{{ $t('home.ContactInfo.Tel') }}</p>
+        <p>Email：{{ $t('home.ContactInfo.Email') }}</p>
+        <p>WeChat：{{ $t('home.ContactInfo.WeChat') }}</p>
       </div>
     </div>
     <ContactForm />

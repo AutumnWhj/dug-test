@@ -1,6 +1,6 @@
 // locales/i18n.ts
 import { createI18n } from 'vue-i18n';
-import messages from '../../config/locales.json';
+import messages from '../../config/locales';
 const i18n = createI18n({
   legacy: false,
   globalInjection: true,

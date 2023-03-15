@@ -1,21 +1,21 @@
 <template>
   <div class="contact-form w-full flex flex-col items-center w-2/5 max-w-[500px] border border-gray-200 rounded py-10 px-10 flex-1">
     <div class="mb-6 text-center">
-      <p class="text-gray-700 mb-3 text-lg">请留系您的联系方式</p>
-      <p class="text-gray-700/50 text-sm">我们会有专人联系您来解决您的问题</p>
+      <p class="text-gray-700 mb-3 text-lg">{{ $t('home.ContactInformation') }}</p>
+      <p class="text-gray-700/50 text-sm">{{ $t('home.ContactInfoDesc') }}</p>
     </div>
     <el-form class="w-full" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large" status-icon>
       <el-form-item prop="name">
-        <el-input v-model="ruleForm.name" placeholder="姓名" />
+        <el-input v-model="ruleForm.name" :placeholder="$t('home.ContactForm[0]')" />
       </el-form-item>
       <el-form-item prop="email">
-        <el-input v-model="ruleForm.email" placeholder="电子邮箱" />
+        <el-input v-model="ruleForm.email" :placeholder="$t('home.ContactForm[1]')" />
       </el-form-item>
       <el-form-item prop="phone_number">
-        <el-input v-model="ruleForm.phone_number" placeholder="联系电话" />
+        <el-input v-model="ruleForm.phone_number" :placeholder="$t('home.ContactForm[2]')" />
       </el-form-item>
       <el-form-item prop="message">
-        <el-input v-model="ruleForm.message" type="textarea" resize="none" :rows="5" placeholder="请描述一下你想咨询的内容" />
+        <el-input v-model="ruleForm.message" type="textarea" resize="none" :rows="5" :placeholder="$t('home.ContactForm[3]')" />
       </el-form-item>
       <div class="w-full flex justify-center mt-10">
         <el-button
@@ -25,7 +25,7 @@
           color="#070707"
           @click="submitForm(ruleFormRef)"
         >
-          <div class="py-4">Leave us a message</div>
+          <div class="py-4">{{ $t('home.ContactFormBtn') }} </div>
         </el-button>
       </div>
     </el-form>
@@ -37,6 +37,8 @@
   import { ElMessage, FormInstance, FormRules } from 'element-plus';
   import Feedback from '/@/components/Dialog/Feedback.vue';
   import { leaveMessage } from '/@/api/user/index';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
   const dialogVisible = ref(false);
   const ruleFormRef = ref<FormInstance>();
   const initForm = {
@@ -55,7 +57,7 @@
       if (valid) {
         const { name, email, phone_number, message } = ruleForm;
         if (!name || !email || !phone_number || !message) {
-          ElMessage.warning('请输入您的联系方式及问题，我们会有专人联系您解决问题');
+          ElMessage.warning(t('home.ContactMessage'));
           return;
         }
         await leaveMessage(ruleForm);

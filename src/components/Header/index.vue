@@ -7,13 +7,15 @@
       </router-link>
     </div>
     <div class="flex text-2xl font-bold items-center">
-      <a class="mr-3 md:mr-20 text-gray-500 cursor-pointer" :class="{ active: route.hash === '#home' }" @click="handleHome">Home</a>
-      <a v-if="isHomePath" class="mr-20 text-gray-500 hidden md:block" :class="{ active: route.hash === '#about' }" href="#about"
-        >About Us</a
-      >
-      <a v-if="isHomePath" class="mr-9 text-gray-500 hidden md:block" :class="{ active: route.hash === '#contact' }" href="#contact"
-        >Contact</a
-      >
+      <a class="mr-3 md:mr-20 text-gray-500 cursor-pointer" :class="{ active: route.hash === '#home' }" @click="handleHome">{{
+        $t('header.Home')
+      }}</a>
+      <a v-if="isHomePath" class="mr-20 text-gray-500 hidden md:block" :class="{ active: route.hash === '#about' }" href="#about">{{
+        $t('header.Aboutus')
+      }}</a>
+      <a v-if="isHomePath" class="mr-9 text-gray-500 hidden md:block" :class="{ active: route.hash === '#contact' }" href="#contact">{{
+        $t('header.contact')
+      }}</a>
       <el-button
         v-if="isHomePath"
         class="!rounded-2xl mr-9 w-32 !font-bold !hidden md:!block"
@@ -21,7 +23,7 @@
         color="#2C72FE"
         @click="toLogin"
       >
-        Login
+        {{ $t('header.Login') }}
       </el-button>
       <el-dropdown trigger="click" @command="handleCommand">
         <div class="h-10 bg-white rounded-2xl flex items-center justify-center card-shadow cursor-pointer">

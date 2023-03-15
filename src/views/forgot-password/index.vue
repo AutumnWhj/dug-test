@@ -3,21 +3,21 @@
     <el-image class="h-28 w-28 mb-10" :src="logoTextImage" />
     <div class="min-w-96 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="text-center mb-8">
-        <div class="text-gray-300 text-xl mb-3">找回密码</div>
-        <div class="text-gray-300/50 text-sm">请输入您的注册邮箱</div>
+        <div class="text-gray-300 text-xl mb-3">{{ $t('forgot.find') }}</div>
+        <div class="text-gray-300/50 text-sm">{{ $t('forgot.email') }}</div>
       </div>
       <el-form class="w-full mb-16" ref="ruleFormRef" :model="ruleForm" :rules="rules" size="large">
         <el-form-item v-if="!hadVerify" prop="email">
-          <el-input v-model="ruleForm.email" placeholder="邮箱" />
+          <el-input v-model="ruleForm.email" :placeholder="$t('forgot.form.email')" />
         </el-form-item>
         <el-form-item v-if="hadCode && !hadVerify" prop="code">
-          <el-input v-model="ruleForm.code" placeholder="验证码" />
+          <el-input v-model="ruleForm.code" :placeholder="$t('forgot.form.code')" />
         </el-form-item>
         <el-form-item v-if="hadVerify" prop="password">
-          <el-input v-model="ruleForm.password" placeholder="密码" type="password" />
+          <el-input v-model="ruleForm.password" :placeholder="$t('forgot.form.password')" type="password" />
         </el-form-item>
         <el-form-item v-if="hadVerify" prop="repeatPassword">
-          <el-input v-model="ruleForm.repeatPassword" placeholder="再次输入密码" type="password" />
+          <el-input v-model="ruleForm.repeatPassword" :placeholder="$t('forgot.form.repeatPassword')" type="password" />
         </el-form-item>
         <el-form-item v-if="hadVerify">
           <password-strength :password="ruleForm.password" style="padding-top: 10px" />
@@ -32,13 +32,14 @@
 
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
-  import { ElMessage, FormInstance, FormRules } from 'element-plus';
+  import { ElMessage, FormInstance } from 'element-plus';
   import logoTextImage from '/@/assets/images/logo_text.png';
   import { verifyEmail, resetPassword } from '/@/api/user/index';
   import { useUserStore } from '/@/store/index';
   import { setToken } from '/@/utils/auth';
   import passwordStrength from '/@/components/PasswordStrength/index.vue';
-
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
   const userStore = useUserStore();
 
   const router = useRouter();
@@ -52,26 +53,28 @@
     password: '',
     repeatPassword: '',
   });
-  const rules = reactive<FormRules>({
-    email: [
-      { required: true, message: '请输入邮箱', trigger: 'blur' },
-      {
-        pattern:
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        message: '请输入正确的邮箱',
-        trigger: 'blur',
-      },
-    ],
-    code: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
-    password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-    repeatPassword: [{ required: true, message: '请再次输入密码', trigger: 'blur' }],
+  const rules = computed(() => {
+    return {
+      email: [
+        { required: true, message: t('forgot.rules.email'), trigger: 'blur' },
+        {
+          pattern:
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          message: t('forgot.rules.pattern'),
+          trigger: 'blur',
+        },
+      ],
+      code: [{ required: true, message: t('forgot.rules.code'), trigger: 'blur' }],
+      password: [{ required: true, message: t('forgot.rules.password'), trigger: 'blur' }],
+      repeatPassword: [{ required: true, message: t('forgot.rules.repeatPassword'), trigger: 'blur' }],
+    };
   });
   const hadCode = ref(false);
   const hadVerify = ref(false);
   const verifyUserId = ref('');
   const buttonText = computed(() => {
-    if (hadVerify.value) return '完成';
-    return hadCode.value ? 'next' : '获取验证码';
+    if (hadVerify.value) return t('forgot.code.hadVerify');
+    return hadCode.value ? t('forgot.code.next') : t('forgot.code.hadCode');
   });
   // submitForm(ruleFormRef)
   const submitForm = async (formEl: FormInstance | undefined) => {
@@ -80,7 +83,7 @@
       if (valid) {
         if (hadVerify.value) {
           if (ruleForm.repeatPassword !== ruleForm.password) {
-            ElMessage.warning('两次输入的密码不一致');
+            ElMessage.warning(t('forgot.message.warning'));
             return;
           }
           hadCode.value = false;

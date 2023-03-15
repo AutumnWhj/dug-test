@@ -1,8 +1,10 @@
 <template>
   <div class="flex flex-col items-center w-full">
-    <div class="text-gray-600 text-[5.625rem] font-bold text-center leading-snug mb-6">
-      Help solve your
-      <div><span class="text-blue-500">Settlement</span> worries</div>
+    <div class="text-gray-600 font-bold text-center leading-snug mb-6">
+      <div class="text-[4.5rem] text-blue-500">{{ $t('home.Slogan[0]') }}</div>
+      <div class="text-[3.75rem]">{{ $t('home.Slogan[1]') }}</div>
+      <div class="text-[4.5rem] text-blue-500">{{ $t('home.Slogan[2]') }}</div>
+      <div class="text-[3.75rem]">{{ $t('home.Slogan[3]') }}</div>
     </div>
     <div class="w-full md:w-[580px] h-96 bg-black mt-11">
       <iframe
@@ -18,10 +20,10 @@
     </div>
     <div class="flex justify-center gap-4 md:gap-6 mt-8">
       <el-button class="w-56 md:w-60 !h-16 !rounded-[56px] !font-bold !text-primary !text-lg !border-primary cursor-pointer">
-        <div class="py-4" @click="dialogVisible = true">Contact us</div>
+        <div class="py-4" @click="dialogVisible = true">{{ $t('home.ButtonTexts[0]') }}</div>
       </el-button>
       <el-button class="w-48 md:w-60 !h-16 !rounded-[48px] !font-bold text-white !text-lg cursor-pointer" color="#2c73ff" @click="toLogin">
-        <div class="py-4">Login or Register</div>
+        <div class="py-4">{{ $t('home.ButtonTexts[1]') }}</div>
       </el-button>
     </div>
   </div>
