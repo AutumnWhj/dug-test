@@ -151,6 +151,14 @@ export default {
         warning: 'The two entered passwords do not match',
       },
     },
+    agreement: {
+      title: 'SERVICES AGREEMENT',
+      scroll: {
+        one: 'Please scroll to read the terms',
+        two: 'Please slide to the end',
+        three: 'Read',
+      },
+    },
   },
   zh: {
     message: {
@@ -302,6 +310,14 @@ export default {
       message: {
         success: '注册成功',
         warning: '两次输入的密码不一致',
+      },
+    },
+    agreement: {
+      title: '服务协议',
+      scroll: {
+        one: '请滚动阅读条款',
+        two: '请滑动到底',
+        three: '已阅读',
       },
     },
   },

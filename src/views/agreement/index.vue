@@ -3,7 +3,7 @@
     <div class="w-full md:w-2/5 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="flex flex-col items-center mb-16">
         <el-image class="h-16 w-16 mb-4" :src="logoTextImage" />
-        <div class="text-sm text-black font-bold mb-6"> SERVICES AGREEMENT</div>
+        <div class="text-sm text-black font-bold mb-6">{{ $t('agreement.title') }}</div>
         <el-scrollbar ref="scrollbar" height="28rem" :always="true" @scroll="handleScroll">
           <div class="text-xs text-black leading-normal px-6">
             THIS MAIN SERVICES AGREEMENT GOVERNS CUSTOMER’S ACQUISITION AND USE OF SFDC SERVICES.CAPITALIZED TERMS HAVE THE DEFINITIONS SET
@@ -36,7 +36,8 @@
   import { useRouter, useRoute } from 'vue-router';
   import LeaveMessage from '../components/LeaveMessage.vue';
   import logoTextImage from '/@/assets/images/logo_text.png';
-
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
   const router = useRouter();
   const route = useRoute();
   const { id = '' } = route.query || '';
@@ -66,18 +67,18 @@
     if (time.value > 0) {
       return {
         color: '#A6A6A6',
-        message: `请滚动阅读条款 （ ${time.value} s）`,
+        message: ` ${t('agreement.scroll.one')} （ ${time.value} s）`,
       };
     } else {
       if (!isScrollBottom.value) {
         return {
           color: '#A6A6A6',
-          message: `请滑动到底`,
+          message: ` ${t('agreement.scroll.two')}`,
         };
       } else {
         return {
           color: '#2C72FE',
-          message: `已阅读`,
+          message: `${t('agreement.scroll.three')}`,
         };
       }
     }
