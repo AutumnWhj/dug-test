@@ -6,7 +6,10 @@
       <div class="font-bold text-6xl">{{ $t('home.WhyChooseUs') }}</div>
     </div>
     <div class="text-center text-xl text-gray-700/50 mt-10" v-html="$t('home.AboutUsDesc')"> </div>
-    <div :key="$t('message.lang')" class="mt-20 justify-between grid grid-cols-1 md:grid-cols-3 justify-items-stretch gap-10 2xl:gap-16">
+    <div
+      :key="$t('message.lang')"
+      class="mt-20 justify-between grid grid-cols-1 md:grid-cols-3 justify-items-stretch gap-10 2xl:gap-16 w-full"
+    >
       <div
         v-for="index in 3"
         :key="index"

@@ -18,6 +18,7 @@ export const uploadFile = (file): Promise<string> => {
         },
       },
       function (err, data) {
+        console.log('err: ', err);
         console.log(data.Location);
         resolve(data.Location);
       },

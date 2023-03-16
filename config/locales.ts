@@ -73,6 +73,7 @@ export default {
       ContactFeedbackBtn: 'Confirm',
       Contact: 'Request a Demo',
       ContactTitle: `Let's get in touch`,
+      ContactSubTitle: `Give us a call or fill in the form below and we will </br> contact you. We endeavor to answer </br> all inquiries within 24 hours.`,
       ContactInfo: {
         Tel: '000 - 000 - 000',
         Email: 'dugsolutions.com',
@@ -322,6 +323,7 @@ export default {
       ContactFeedbackBtn: '确定',
       Contact: '申请演示',
       ContactTitle: `让我们保持联系`,
+      ContactSubTitle: `给我们打电话或填写下面的表格，我们会联系你的。</br>我们努力在24小时内完成回答所有咨询。`,
       ContactInfo: {
         Tel: '000 - 000 - 000',
         Email: 'dugsolutions.com',

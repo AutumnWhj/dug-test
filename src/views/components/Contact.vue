@@ -1,10 +1,11 @@
 <template>
-  <div class="flex items-center flex-col md:flex-row justify-between 2xl:justify-around gap-20 w-full relative">
-    <div class="text-center md:text-left">
+  <div class="flex items-center flex-col md:flex-row justify-between gap-20 w-full relative">
+    <div class="text-center md:text-left max-w-1/2">
       <div class="text-primary text-2xl font-bold">{{ $t('home.Contact') }}</div>
       <div class="text-gray-700 font-bold text-6xl mt-4 mb-10 leading-snug">
         {{ $t('home.ContactTitle') }}
       </div>
+      <div class="text-[#1A1B1C] font-medium text-xl mb-10 leading-snug" v-html="$t('home.ContactSubTitle')"> </div>
       <div class="text-gray-700/50 text-xl font-bold flex flex-col gap-2">
         <p>Tel:{{ $t('home.ContactInfo.Tel') }}</p>
         <p>Email：{{ $t('home.ContactInfo.Email') }}</p>
