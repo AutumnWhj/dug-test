@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center flex-col md:flex-row justify-between gap-20 w-full relative">
+  <div class="flex items-center flex-col !max-w-90rem md:flex-row justify-between gap-20 w-full relative">
     <div class="text-center md:text-left max-w-1/2">
       <div class="text-primary text-2xl font-bold">{{ $t('home.Contact') }}</div>
       <div class="text-gray-700 font-bold text-6xl mt-4 mb-10 leading-snug">
