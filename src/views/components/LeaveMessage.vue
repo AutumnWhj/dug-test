@@ -64,6 +64,8 @@
   import closeIcon from '/@/assets/images/close.png';
   import logoImage from '/@/assets/images/logo.png';
   import { leaveMessage as leaveMessageApi } from '/@/api/user/index';
+  import { useUserStore } from '/@/store';
+  const userStore = useUserStore();
 
   const showTip = ref(localStorage.getItem('showTip') !== '1');
   const showComment = ref(false);
@@ -75,8 +77,10 @@
     localStorage.setItem('showTip', '1');
   };
   const sendMessage = async () => {
+    const { user_id } = userStore || {};
     await leaveMessageApi({
       message: leaveMessage.value,
+      user_id,
     });
     successComment.value = true;
     leaveMessage.value = '';

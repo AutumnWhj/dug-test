@@ -38,6 +38,9 @@
   import Feedback from '/@/components/Dialog/Feedback.vue';
   import { leaveMessage } from '/@/api/user/index';
   import { useI18n } from 'vue-i18n';
+  import { useUserStore } from '/@/store';
+  const userStore = useUserStore();
+
   const { t } = useI18n();
   const dialogVisible = ref(false);
   const ruleFormRef = ref<FormInstance>();
@@ -60,7 +63,11 @@
           ElMessage.warning(t('home.ContactMessage'));
           return;
         }
-        await leaveMessage(ruleForm);
+        const { user_id } = userStore;
+        await leaveMessage({
+          ...ruleForm,
+          user_id,
+        });
         dialogVisible.value = true;
         Object.assign(ruleForm, initForm);
         console.log('submit!');
