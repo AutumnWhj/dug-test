@@ -24,6 +24,7 @@
                   size="large"
                   :placeholder="$t('restaurantEdit.timePlaceholder')"
                   class="!w-full !absolute opacity-0"
+                  @change="() => handleTimeChange(item)"
                 >
                   <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
@@ -73,7 +74,7 @@
   import type { FormInstance } from 'element-plus';
   import LeaveMessage from '../components/LeaveMessage.vue';
   import { Picture as IconPicture } from '@element-plus/icons-vue';
-  import { getRestaurants, createRestaurant } from '/@/api/user/index';
+  import { getRestaurants, createRestaurant, updateRestaurant } from '/@/api/user/index';
   import { useRouter } from 'vue-router';
   import { useUserStore } from '/@/store';
   import DoorDashImage from '/@/assets/images/DoorDash1.png';
@@ -120,15 +121,15 @@
   const options = computed(() => {
     return [
       {
-        value: 0,
+        value: 3,
         label: t('restaurantEdit.timeOptions[0]'),
       },
       {
-        value: 1,
+        value: 5,
         label: t('restaurantEdit.timeOptions[1]'),
       },
       {
-        value: 2,
+        value: 7,
         label: t('restaurantEdit.timeOptions[2]'),
       },
     ];
@@ -149,6 +150,16 @@
 
   const handleReport = (data) => {
     router.push(`/restaurant/detail?restaurantId=${data.kind}`);
+  };
+
+  const handleTimeChange = async (item) => {
+    const { kind } = item;
+    await updateRestaurant({
+      user_id,
+      frequency: time.value,
+      kind,
+    });
+    await getList();
   };
 
   const submitForm = async (formEl: FormInstance | undefined, kind, index) => {
