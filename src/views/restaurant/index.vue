@@ -56,11 +56,19 @@
             :rules="platformsRules[item.kind]"
             size="large"
           >
-            <el-form-item prop="username">
-              <el-input v-model="ruleForm[`username`]" :placeholder="$t(`bind.${platformMap[item.kind].name}.username`)" size="large" />
+            <el-form-item :prop="ruleForm[item.kind].username">
+              <el-input
+                v-model="ruleForm[item.kind][`username`]"
+                :placeholder="$t(`bind.${platformMap[item.kind].name}.username`)"
+                size="large"
+              />
             </el-form-item>
-            <el-form-item prop="password">
-              <el-input type="password" v-model="ruleForm['password']" :placeholder="$t(`bind.${platformMap[item.kind].name}.password`)" />
+            <el-form-item :prop="ruleForm[item.kind].password">
+              <el-input
+                type="password"
+                v-model="ruleForm[item.kind]['password']"
+                :placeholder="$t(`bind.${platformMap[item.kind].name}.password`)"
+              />
             </el-form-item>
           </el-form>
         </div>
@@ -99,8 +107,18 @@
   };
   const { t } = useI18n();
   let ruleForm = reactive({
-    username: '',
-    password: '',
+    1: {
+      username: '',
+      password: '',
+    },
+    2: {
+      username: '',
+      password: '',
+    },
+    3: {
+      username: '',
+      password: '',
+    },
   });
   const platformsRules = computed(() => {
     return {
@@ -163,7 +181,7 @@
   };
 
   const submitForm = async (formEl: FormInstance | undefined, kind, index) => {
-    console.log('formEl111111: ', formEl, index);
+    console.log('formEl111111: ', formEl, index, ruleForm);
     if (!formEl) return;
     await formEl[index].validate(async (valid, fields) => {
       if (valid) {
@@ -171,7 +189,7 @@
           user_id,
           platforms: [
             {
-              ...ruleForm,
+              ...ruleForm[kind],
               kind,
             },
           ],
