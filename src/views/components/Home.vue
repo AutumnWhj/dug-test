@@ -9,15 +9,7 @@
       <div class="text-[3.75rem]">{{ $t('home.Slogan[3]') }}</div>
     </div>
     <div class="w-full md:w-[580px] h-96 bg-black mt-11">
-      <iframe
-        src="https://data-1256210609.cos.ap-guangzhou.myqcloud.com/4363_1675309340.mp4"
-        scrolling="no"
-        border="0"
-        frameborder="no"
-        framespacing="0"
-        allowfullscreen="true"
-        class="w-full h-full"
-      >
+      <iframe :src="videoUrl" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" class="w-full h-full">
       </iframe>
     </div>
     <div class="flex justify-center gap-4 md:gap-6 mt-8">
@@ -34,9 +26,19 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
   import ContactUs from '/@/components/Dialog/ContactUs.vue';
+  import { useI18n } from 'vue-i18n';
   const dialogVisible = ref(false);
   const router = useRouter();
+
+  const { t } = useI18n();
   const toLogin = () => {
     router.push('/login');
   };
+  const videoUrl = computed(() => {
+    //     中文：https://data-1256210609.cos.ap-guangzhou.myqcloud.com/DUG-0406%E4%B8%AD%E6%96%87.mp4
+    // 英文：https://data-1256210609.cos.ap-guangzhou.myqcloud.com/DUG-0406%E8%8B%B1%E6%96%87.mp4
+    return t('message.lang') === '中文'
+      ? 'https://data-1256210609.cos.ap-guangzhou.myqcloud.com/DUG-0406%E4%B8%AD%E6%96%87.mp4'
+      : 'https://data-1256210609.cos.ap-guangzhou.myqcloud.com/DUG-0406%E8%8B%B1%E6%96%87.mp4';
+  });
 </script>

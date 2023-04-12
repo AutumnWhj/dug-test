@@ -5,7 +5,7 @@
         <div class="flex items-center self-center mb-6">
           <el-image v-if="hasPre" class="h-7 w-4 mr-5 cursor-pointer rotate-180" :src="arrowRightImage" @click="handleSwitchPage('pre')" />
           <div class="flex flex-col items-center">
-            <el-image class="h-24 w-24 rounded-md" :src="currentRestaurant?.image" />
+            <el-image class="h-18 w-42 rounded-md" :src="platformMap[currentRestaurant?.kind].image" />
             <div class="text-black font-medium text-sm mt-2">{{ currentRestaurant?.name }}</div>
           </div>
           <el-image v-if="hasNext" class="h-7 w-4 ml-5 cursor-pointer" :src="arrowRightImage" @click="handleSwitchPage('next')" />
@@ -80,6 +80,23 @@
   import router from '/@/router';
   import { useUserStore } from '/@/store';
   import { useI18n } from 'vue-i18n';
+  import DoorDashImage from '/@/assets/images/DoorDash1.png';
+  import UberEatsImage from '/@/assets/images/UberEats.png';
+  import GrubHubImage from '/@/assets/images/GrubHub.png';
+  const platformMap = {
+    1: {
+      image: DoorDashImage,
+      name: 'doordash',
+    },
+    2: {
+      image: UberEatsImage,
+      name: 'ubereats',
+    },
+    3: {
+      image: GrubHubImage,
+      name: 'grubhub',
+    },
+  };
   const { t } = useI18n();
   const report: any = ref([]);
   const restaurants: any = ref([]);
@@ -94,7 +111,7 @@
   const loading = ref(false);
   const defaultParams = reactive({
     user_id,
-    restaurant_id: Number(restaurantId),
+    kind: Number(restaurantId),
     page_num: 1,
     page_size: selectTime.value,
   });
@@ -140,14 +157,14 @@
     restaurants.value = await getRestaurants({ user_id });
   });
   const currentRestaurant = computed(() => {
-    return restaurants.value.find((item) => item.id === Number(restaurantId));
+    return restaurants.value.find((item) => item.kind === Number(restaurantId));
   });
   const hasNext = computed(() => {
-    const index = (restaurants.value || []).findIndex((item) => item.id === Number(restaurantId));
+    const index = (restaurants.value || []).findIndex((item) => item.kind === Number(restaurantId));
     return !!restaurants.value[index + 1];
   });
   const hasPre = computed(() => {
-    const index = (restaurants.value || []).findIndex((item) => item.id === Number(restaurantId));
+    const index = (restaurants.value || []).findIndex((item) => item.kind === Number(restaurantId));
     return !!restaurants.value[index - 1];
   });
 
@@ -205,10 +222,10 @@
     }
   };
   const handleSwitchPage = (type) => {
-    const index = restaurants.value.findIndex((item) => item.id === Number(restaurantId));
-    const { id } = type === 'next' ? restaurants.value[index + 1] : restaurants.value[index - 1];
-    if (id) {
-      router.replace(`/restaurant/detail?restaurantId=${id}`);
+    const index = restaurants.value.findIndex((item) => item.kind === Number(restaurantId));
+    const { kind } = type === 'next' ? restaurants.value[index + 1] : restaurants.value[index - 1];
+    if (kind) {
+      router.replace(`/restaurant/detail?restaurantId=${kind}`);
       setTimeout(() => location.reload(), 100);
     }
   };

@@ -174,7 +174,7 @@ export default {
       },
       noId: {
         title: 'Binding delivery platform',
-        desc: 'Choose a delivery platform that your restaurant often uses for the first binding',
+        desc: 'Binding can help you analyze the error data, help you recover money',
       },
       doordash: {
         username: 'DoorDash account',
@@ -215,6 +215,9 @@ export default {
       subTitle: 'Hello, ',
       noData: 'No data',
       edit: 'Edit',
+      choose: 'Select time',
+      applying: 'Reviewing',
+      submit: 'Submit',
       check: 'Check report',
       download: 'Download document',
       btn: 'Add restaurant',
@@ -424,7 +427,7 @@ export default {
       },
       noId: {
         title: '绑定外卖平台',
-        desc: '选择一个您餐厅常使用的外卖平台做首次绑定',
+        desc: '绑定后可以帮你分析错误数据，帮你追回差款',
       },
       doordash: {
         username: 'DoorDash账号',
@@ -465,6 +468,9 @@ export default {
       subTitle: '你好，',
       noData: '暂无数据',
       edit: '修改餐厅资料',
+      choose: '选择汇总时间',
+      applying: '审核中',
+      submit: '提交',
       check: '查看报告',
       download: '下载文档',
       btn: '添加餐厅',
