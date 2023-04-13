@@ -211,7 +211,13 @@
           </div>
         </el-scrollbar>
       </div>
-      <el-button class="w-2/3 self-center !rounded-3xl mb-8" size="large" :color="buttonStyle.color" @click="toRestaurant">
+      <el-button
+        v-if="from !== 'register'"
+        class="w-2/3 self-center !rounded-3xl mb-8"
+        size="large"
+        :color="buttonStyle.color"
+        @click="toRestaurant"
+      >
         {{ buttonStyle.message }}
       </el-button>
     </div>
@@ -226,8 +232,8 @@
   import { useI18n } from 'vue-i18n';
   const { t } = useI18n();
   const router = useRouter();
-  // const route = useRoute();
-  // const { id = '' } = route.query || '';
+  const route = useRoute();
+  const { from = '' } = route.query || '';
   const toRestaurant = () => {
     if (isScrollBottom.value && time.value === 0) {
       router.push(`/bind`);

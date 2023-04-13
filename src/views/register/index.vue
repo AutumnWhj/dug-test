@@ -26,11 +26,13 @@
           <password-strength :password="ruleForm.password" style="padding-top: 10px" />
         </el-form-item>
       </el-form>
-      <div class="w-full flex justify-between items-center mb-8">
+      <div class="w-full flex items-center mb-8">
         <el-checkbox v-model="isAgreement" label="记住密码" size="small">
           {{ $t('register.checkbox[0]') }}
-          <span class="text-primary text-xs cursor-pointer hover:text-blue-500/70"> {{ $t('register.checkbox[1]') }}</span>
         </el-checkbox>
+        <span class="text-primary text-xs cursor-pointer hover:text-blue-500/70" @click="toAgreement">
+          {{ $t('register.checkbox[1]') }}</span
+        >
       </div>
       <el-button class="w-full !rounded-3xl mb-8" :disabled="!isAgreement" size="large" color="#2C72FE" @click="submitForm(ruleFormRef)">
         {{ $t('register.btn') }}
@@ -127,6 +129,13 @@
   const router = useRouter();
   const toLogin = () => {
     router.push('/login');
+  };
+  const toAgreement = () => {
+    const routeUrl = router.resolve({
+      path: '/agreement',
+      query: { from: 'register' },
+    });
+    window.open(routeUrl.href, '_blank');
   };
 </script>
 

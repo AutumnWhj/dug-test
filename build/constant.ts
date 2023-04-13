@@ -7,7 +7,7 @@
 export const APP_TITLE = 'dug';
 
 // 本地服务端口
-export const VITE_PORT = 3000;
+export const VITE_PORT = 3333;
 
 // prefix
 export const API_PREFIX = '/api';

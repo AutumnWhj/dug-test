@@ -18,7 +18,7 @@
             </el-image>
             <div v-if="item.status === 1" class="hidden md:flex items-center gap-4">
               <el-button plain class="!w-36 self-center !rounded-3xl relative mt-9 mb-8" size="large" color="#383838"
-                >{{ $t('restaurant.choose') }}
+                >{{ getButtonText(item.frequency) }}
                 <el-select
                   v-model="time"
                   size="large"
@@ -89,7 +89,7 @@
   import UberEatsImage from '/@/assets/images/UberEats.png';
   import GrubHubImage from '/@/assets/images/GrubHub.png';
   import { useI18n } from 'vue-i18n';
-  const time = ref('');
+  const time = ref(0);
   const formRef = ref<FormInstance>();
   const platformMap = {
     1: {
@@ -152,6 +152,14 @@
       },
     ];
   });
+
+  const getButtonText = (frequency) => {
+    if (frequency) {
+      const item = options.value.find(({ value }) => value === frequency);
+      return item?.label || t('restaurant.choose');
+    }
+    return t('restaurant.choose');
+  };
 
   const router = useRouter();
   const restaurants: any = ref([]);

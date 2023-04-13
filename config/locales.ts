@@ -211,7 +211,7 @@ export default {
       btn: 'Join us',
     },
     restaurant: {
-      title: 'Please select a restaurant check data',
+      title: 'Please select a platform to check data',
       subTitle: 'Hello, ',
       noData: 'No data',
       edit: 'Edit',
@@ -464,7 +464,7 @@ export default {
       btn: '加入我们',
     },
     restaurant: {
-      title: '请选择餐厅查看数据',
+      title: '请选择平台查看数据',
       subTitle: '你好，',
       noData: '暂无数据',
       edit: '修改餐厅资料',
