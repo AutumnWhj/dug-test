@@ -62,7 +62,7 @@
 <script lang="ts" setup>
   import commentImage from '/@/assets/images/leave_message_comment.png';
   import closeIcon from '/@/assets/images/close.png';
-  import logoImage from '/@/assets/images/logo.png';
+  import logoImage from '/@/assets/images/logo_text.png';
   import { leaveMessage as leaveMessageApi } from '/@/api/user/index';
   import { useUserStore } from '/@/store';
   const userStore = useUserStore();

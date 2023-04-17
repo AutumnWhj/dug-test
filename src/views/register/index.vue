@@ -1,6 +1,6 @@
 <template>
   <div class="pt-4 flex flex-col items-center mb-24">
-    <el-image class="h-28 w-28 mb-10" :src="logoTextImage" />
+    <el-image class="h-17 w-17 mb-10" :src="logoTextImage" />
     <div class="min-w-96 card-shadow flex flex-col bg-white py-10 px-8 rounded-3xl">
       <div class="text-center mb-8">
         <div class="text-gray-300 text-xl mb-3">{{ $t('register.register') }}</div>

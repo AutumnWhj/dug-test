@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="filter-box mb-4 flex justify-between items-center">
-        <el-select v-model="selectTime" class="w-32 !h-10" placeholder="Select" @change="handleSelectChange">
+        <el-select v-if="report.length > 0" v-model="selectTime" class="w-32 !h-10" placeholder="Select" @change="handleSelectChange">
           <el-option v-for="item in timeOptions" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
 

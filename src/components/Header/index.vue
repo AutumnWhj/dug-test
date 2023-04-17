@@ -1,9 +1,8 @@
 <template>
   <header id="header" class="bg-gray-100 z-10 w-full sticky top-0 flex items-center px-5 md:px-16 py-8">
     <div class="flex-1">
-      <router-link v-if="!isLoginPath" to="/" class="flex items-center gap-4 text-lg text-2xl font-bold">
+      <router-link v-if="!isLoginPath" to="/" class="flex items-center">
         <img class="h-10" :src="logo" alt="" />
-        DUG Solutions
       </router-link>
     </div>
     <div class="flex text-2xl font-bold items-center">
@@ -43,7 +42,7 @@
   </header>
 </template>
 <script lang="ts" setup>
-  import logo from '/@/assets/images/logo.png';
+  import logo from '/@/assets/images/new-logo.png';
   import SvgIcon from '/@/components/SvgIcon/index.vue';
   import { useRoute, useRouter } from 'vue-router';
   import { isLogin } from '/@/utils/auth';
